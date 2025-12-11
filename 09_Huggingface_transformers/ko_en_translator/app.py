@@ -14,7 +14,18 @@ def get_model():
 classifier = get_model()
 
 def classify_and_clear():
-    pass
+    print(f'classify_and_clear()------------------------{st.session_state['input_text']}')
+    # pipeline을 이용해 입력된 댓글을 분류
+    comment = st.session_state['input_text']
+    if comment.strip():
+        result = classifier(comment)[0]
+        label = "긍정적 댓글" if result['label'] == '1' else "부정적 댓글"
+        score = result['score']
+        # session_state의 history에 추가
+        st.session_state['history'].append((comment, f"{label}-{score:.3f}"))
+    # 댓글 입력 폼 지우기
+    st.session_state['input_text'] = ' '
+
 
 # 긍부정 분류한 내역을 저장할 session_state를 생성
 # 어떤 값들을 계속 유지해야 할 때 저장하는 공간 (dict 타입): session_state
@@ -25,7 +36,21 @@ st.title("댓글분석기")
 st.subheader("댓글의 내용이 긍정적인지 부정적인지 분류합니다.")
 
 # on change: event handler (어떤 변화가 발생하면 함수를 호출) - test 입력폼에 값이 바뀌고 엔터가 입력되면 함수를 호출. 
-st.text_input("분석할 댓글: ", on_change=classify_and_clear)
+st.text_input(
+    "분석할 댓글: ", 
+    on_change=classify_and_clear, 
+    key="input_text"  # session_state에 지정된 key로 등록되고 값은 입력폼의 value가 저장되어 동기화 된다. 
+                      # session_state값을 변경하면 입력폼의 값이 변경. 반대도 마찬가지. 
+)
+st.button("분석", on_click=classify_and_clear)   # on_click: 마우스 클릭했을 때 함수 호출.
+
+# 댓글 분석 결과 출력
+if st.session_state['history']:
+    st.subheader("분석 결과")
+    for comment, result in st.session_state['history'][::-1]:
+        st.write(comment)
+        st.write(result)
+        st.write("---")
 
 
-st.button("번역")
+# ko_en_translator / streamlit run app.py
