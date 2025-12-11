@@ -3,3 +3,5 @@ saved_models/
 saved_model/
 .vscode/
 .venv/
+.env
+.env/
