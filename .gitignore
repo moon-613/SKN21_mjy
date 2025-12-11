@@ -5,3 +5,4 @@ saved_model/
 .venv/
 .env
 .env/
+.참조_python-dotenv.ipynb
