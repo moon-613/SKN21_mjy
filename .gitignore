@@ -1,2 +1,8 @@
-.env 
+datasets/
+saved_models/
+saved_model/
+.vscode/
+.venv/
+.env
 .env/
+.참조_python-dotenv.ipynb
