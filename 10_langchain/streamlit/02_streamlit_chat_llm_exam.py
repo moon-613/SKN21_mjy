@@ -9,7 +9,7 @@ def get_model():
     load_dotenv()
     return ChatOpenAI(model="gpt-5-mini")
 
-@st.session_resource
+@st.cache_resource
 def get_prompt_template():
     prompt = ChatPromptTemplate(
         [
