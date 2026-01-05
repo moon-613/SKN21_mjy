@@ -25,7 +25,7 @@ def get_human_message(text_message: str, bytes_data:bytes=None, mime_type=None, 
             마지막 항목은 현재 사용자 입력과 첨부 파일(있는 경우)을 포함한 HumanMessage.
     """
 
-    # PDF 전송시 OpenAI는 파일이름을 전송해야한다.
+    # PDF 전송 시 OpenAI는 파일 이름을 전송해야한다.
     # https://python.langchain.com/docs/integrations/chat/openai/#multimodal-inputs-images-pdfs-audio
 
     # 입력 메세지들을 저장할 리스트
@@ -40,6 +40,7 @@ def get_human_message(text_message: str, bytes_data:bytes=None, mime_type=None, 
 
     from pprint import pprint
     print("get_human_message history added:", messages)
+    
     # 현재 사용자 입력 추가
     content=[
         {"type": "text", "text": text_message},

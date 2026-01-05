@@ -7,7 +7,7 @@ import os
 ###################################################################################
 # - chat_input에서 파일 첨부 받기
 #   - accept_file(bool | str): True - 첨부가능, "multiple": 여러 파일 첨부가능
-#    >> prompt = st.chat_input(placeholder="User:", accept_file=True)  
+#    >> prompt = st.chat_input(placeholder="User:", accept_file=True)   # accept_file=True : 첨부 가능
 #
 # - st.chat_input의 반환타입인 ChatInputValue의 attributes:
 #   - ChatInputValue.text : 텍스트 입력
