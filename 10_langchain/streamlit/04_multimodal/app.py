@@ -45,22 +45,22 @@ for message in st.session_state['message_list']:
 prompt = st.chat_input(
     placeholder="User:", 
     accept_file=True, 
-    # file_type=["txt", "md", "pdf", "html", "jpeg", "jpg", "png"]  # 확장자로 첨부 파일 형식 제한.
+    # file_type=["txt", "md", "pdf", "html", "jpeg", "jpg", "png"]    # 확장자로 첨부 파일 형식 제한.
 )
 
 ###########################################
 # 사용자가 입력한 텍스트와 첨부파일 처리
 ###########################################
 if prompt:
-    text_prompt = prompt.text
-    attach_files = prompt.files
+    text_prompt = prompt.text   # text 입력
+    attach_files = prompt.files   # 첨부 파일: return type이 하나라도 list
     mime_type=None
     bytes_data = None
     filename = None
 
     if attach_files:
         attach_file = attach_files[0]
-        bytes_data = attach_file.getvalue()
+        bytes_data = attach_file.getvalue()     # bytes
         mime_type = utils.get_file_mimetype(bytes_data)
         filename = attach_file.name
         
