@@ -29,12 +29,12 @@ HTML 요소들을 행(`row`)과 열(`column`)의 구조로 나누어, 다양한 
 
 | 브레이크포인트  | 접두어     | 최소 너비 | 디바이스 예시|
 | --------------- | ---------- | --------- | ------------ |
-| Extra small     | `col-`     | 없음      | 스마트폰     |
-| Small           | `col-sm-`  | ≥576px    | 작은 태블릿  |
-| Medium          | `col-md-`  | ≥768px    | 일반 태블릿  |
-| Large           | `col-lg-`  | ≥992px    | 노트북       |
-| Extra large     | `col-xl-`  | ≥1200px   | 데스크탑     |
-| XXL             | `col-xxl-` | ≥1400px   | 대형 디스플레이 |
+| Extra small     | `col-`     | 없음       | 스마트폰       |
+| Small           | `col-sm-`  | ≥576px    | 작은 태블릿     |
+| Medium          | `col-md-`  | ≥768px    | 일반 태블릿     |
+| Large           | `col-lg-`  | ≥992px    | 노트북         |
+| Extra large     | `col-xl-`  | ≥1200px   | 데스크탑       |
+| XXL             | `col-xxl-` | ≥1400px   | 대형 디스플레이  |
 
 
 3. **행(`row`)과 열(`col`)의 구조**
@@ -60,7 +60,7 @@ HTML 요소들을 행(`row`)과 열(`column`)의 구조로 나누어, 다양한 
 ```html
 <div class="row">
   <div class="col-6">
-    <div class="row">
+    <div class="row"> <!-- row는 12칸 -->
       <div class="col-6">중첩 열1</div>
       <div class="col-6">중첩 열2</div>
     </div>
