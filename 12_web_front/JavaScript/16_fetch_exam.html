@@ -1,0 +1,54 @@
+<!-- 
+- fetch()는 네트워크 요청(Network Request)을 보내고 응답(Response)을 받기 위한 Javascript 함수​
+    - 기존의 XMLHttpRequest보다 더 간결하고 Promise 기반으로 설계되어 비동기 코드 흐름과 잘 맞는다.​
+    
+- 호출​
+
+    - fetch(url, options): Promise<Response>​
+        - url (문자열) - 요청을 보낼 주소​
+        - options (객체) - 요청과 관련된 다양한 설정들. 요청방식, header, body 등​
+
+    - 반환값: Promise<Response>​
+        - 요청을 보내면 Promise가 바로 반환된다. 서버에서 응답이 오면 Promise가 Response객체로 이행된다.​
+        - Promise: 자바스크립트의 비동기 처리 제어를 위한 표준으로 비동기 작업의 미래 완료 결과(성공 또는 실패)를 나타내는 객체이다.
+
+- Response​
+    - fetch()의 최종 반환 값으로 서버 응답 정보를 담아 제공한다.​
+
+    - 주요 Property​
+        - ok (bool) - 정상 응답인지 오류응답지. (200번 범위면 true 반환)​
+        - status (number): HTTP 상태 코드​
+        - headers (headers object): 응답 Header 객체​
+        - body: (ReadableStream): 응답 본문(body) Stream​
+
+    - Body 내용 읽기 메소드​
+        - 응답 본문(body)을 다양한 형식으로 변환해서 읽는 함수를 제공. Stream을 이용해 읽기 때문에 한번 읽으면 다시 읽을 수 없다.​
+        - Response.json(): Promise<object>: JSON 파싱해서 JS Object로 반환​
+        - Response.text(): Promise<string>: 일반 text​
+        - Response.blob(): Promise<Blob>: 이미지/파일​
+        - Response.formData(): Promise<FormData>: multipart form​
+
+ -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+
+
+    </script>
+
+    <button onclick="getData()">GET 요청</button>
+    <button onclick="postData()">POST 요청</button>
+</body>
+<div id="result"></div>
+</html>
