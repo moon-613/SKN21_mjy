@@ -54,8 +54,19 @@
 
         <script>
             function checkHobby() {
-                
-
+                const hobby_list = document.f1.hobby;  // node list (배열) -> hobby check box들
+                let cnt = 0;  // check된 것의 개수 저장할 변수
+                for (let idx in hobby_list) {
+                    if (hobby_list[idx].checked) {
+                        // checked=true
+                        cnt++;
+                    }
+                }
+                console.log("cnt", cnt);
+                if (cnt == 0) {
+                    alert("취미를 한 개 이상 선택하세요.");
+                    // submit 이벤트 처리 -> 전송이 안되도록 처리.                
+                }
             }
 
             function checkAll() {
