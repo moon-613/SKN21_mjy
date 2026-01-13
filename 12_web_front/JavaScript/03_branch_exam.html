@@ -34,19 +34,13 @@
                     alert("삭제 취소");
                 }
             }
-            ifExam2()
+            // ifExam2()
 
             function switchExam() {
                 let month = parseInt(prompt("월을 입력하세요"));
 
                 switch (month) {
-                    case 1:
-                    case 3:
-                    case 5:
-                    case 7:
-                    case 8:
-                    case 10:
-                    case 12:
+                    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
                         alert(month + "월은 31일까지 입니다.");
                         break;
                     case 4:
@@ -62,6 +56,16 @@
                         alert(month + "는 잘못된 값입니다.");
                 }
             }
+            switchExam();
         </script>
     </body>
 </html>
+
+
+<!-- for while 문 -->
+<!-- a = ??  // 조건절에서 사용할 변수
+
+while (a>10 - 조건절) {
+    console.log(a);
+    조건절 변수를 변경 (증감식)
+} -->

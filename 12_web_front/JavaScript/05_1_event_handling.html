@@ -1,3 +1,4 @@
+<!-- 26/01/12(월) 15:30 -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,18 +10,18 @@
         #layer {
             width: 300px;
             height: 300px;
-            background-color: blue;
+            background-color: rgb(151, 198, 255);
         }
     </style>
     <body>
         <div
             id="layer"
-            onmouseover='console.log("마우스 IN")'
-            onmouseout='console.log("마우스out")'
+            onmouseover='console.log("마우스 IN")'  
+            onmouseout='console.log("마우스 out")'
             onclick='alert("클릭")'
         ></div>
 
-        <input type="text" name="txt" onblur="check(this)">
+        <input type="text" name="txt" onblur="check(this)"> 
 
         <form
             action="/test"
@@ -35,8 +36,8 @@
 
         <script>
             function check(text_input) {
-                alert(text_input.value);
-                text_input.value = "";
+                alert(text_input.value);  // 입력 form의 value (입력값)을 조회. text_input 객체의 value 속성값 조회.
+                text_input.value = "";    // value를 변경 
             }
             
             function checkForm() {
@@ -63,7 +64,7 @@
                     return false;
                 } else {
                     ageNum = parseInt(age);
-                    if (!ageNum) {
+                    if (!ageNum || ageNum > 0) {
                         alert("나이는 숫자만 가능합니다.");
                         ageTF.value = "";
                         ageTF.focus();

@@ -1,4 +1,4 @@
-// script.js - JavaScript 모듈. 확장자를 .js
+// scripts.js - JavaScript 모듈. 확장자를 .js
 
 document.write("안녕하세요");  // 화면에 출력 
         console.log("개발자 도구 console에 출력")  // 화면에 안 나옴. '개발자 도구 (F12)'='접근성 속성 검사' 열면 '콘솔'에 나옴.

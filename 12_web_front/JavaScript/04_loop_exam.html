@@ -1,3 +1,4 @@
+<!-- 26/01/12(월) 12:40 -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,35 +12,47 @@
             // 반복문 : while, for , do while, for in
 
             function whileExam(num) {
-                let list = [];
-                while (num < 10) {
-                    list.push(num);
-                    num++;
+                // num: 초기식
+                let list = [];  // python으로는 list. html에서는 배열 (array).
+                while (num < 10) {  // 조건식
+                    list.push(num);  // 배열에 값을 추가
+                    num++;  // 증감식 num += 1
                 }
                 alert(list);
             }
+            // whileExam(15);
 
             function forExam() {
                 let list = [];
+                // for (초기식-1; 조건식-2; 증감식-3) {반복구문}
+                // 1 -> 2 -true-> 4 -> 3 -> 2 -true-> 4 -> 3 -> 2 -false-> 종료
                 for (let num = 1; num < 10; num++) {
                     list.push(num);
                 }
                 alert(list);
             }
+            // forExam();
+
+            // while/for -> 0회 이상 반복
+            // do while -> 1회 이상 반복
+            
 
             function doWhileExam() {
                 let list = [];
+                let num = null;
                 do {
                     let num = parseInt(
-                        prompt("짝수를 입력하세요. 홀수입력시 종료합니다.")
+                        prompt("짝수를 입력하세요. 홀수 입력 시 종료합니다.")
                     );
-                    if (num % 2 != 0) {
-                        break;
-                    }
+                    // if (num % 2 != 0) {
+                    //     break;
+                    // }
                     list.push(num);
-                } while (true);
+                } while (num % 2 != 0);   // while (true)
                 alert(list);
             }
+
+            doWhileExam();
 
             function forInExam() {
                 let list = ["a", "b", "c", "d", "e"];
