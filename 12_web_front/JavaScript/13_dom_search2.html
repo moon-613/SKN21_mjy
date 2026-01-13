@@ -1,3 +1,4 @@
+<!-- 26/01/13(화) 16:20 -->
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -36,14 +37,19 @@
                 let in_1_3 = document.getElementById("in_1_3");
                 in_1_3.parentNode.style = "border:3px solid red;";
 
-                // in_1_3.previousElementSibling.style = "color:violet;";
+                in_1_3.previousElementSibling.style = "color:violet;";  // Sibling = 형제. previous = 앞에 있는. 것 색이 보라색으로 변함.
 
-                // in_1_3.firstChild.nextSibling.style = "text-decoration:underline; color:green;";
+                in_1_3.firstChild.nextSibling.style = "text-decoration:underline; color:green;";   
+                // firstChild = 자식 노드들 중 가장 첫 번째. nextSibling = 다음 형제. text-decoration:underline = 밑줄 긋기.
 
-                // document.getElementById("in_2_2").children[0].style = "text-decoration:underline";
+                document.getElementById("in_2_2").children[0].style = "text-decoration:underline";
+                // 2-2의 children: 자식 노드들 중 0번째 3-1. 밑줄. 
 
-                // alert("children : " + in_1_3.children.length);
-                // alert("childNodes : " + in_1_3.childNodes.length);
+                alert("children : " + in_1_3.children.length);
+                // 1-3 바로 아래 있는 자식 태그 개수. (2-1, 2-2, 2-3) 3. 눈에 보이는 html 태그
+                alert("childNodes : " + in_1_3.childNodes.length);
+                // 1-3 아래에 있는 노드 개수. 태그 뿐 아니라 공백, 텍스트까지 하나의 노드로 취급. 7.
+
             }
         </script>
     </body>

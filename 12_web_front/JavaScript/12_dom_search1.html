@@ -1,3 +1,4 @@
+<!-- 26/01/13(화) 15:30 -->
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -31,29 +32,47 @@
             <span class="pink_color">DIV입니다.</span>
 
             <hr />
-            <input type="button" class="btn btn-primary" value="searchByName()호출" onclick="searchByName()" />
-            <input type="button" class="btn btn-primary" value="searchById()호출" onclick="searchById()" />
-            <input type="button" class="btn btn-primary" value="searchByTagName('textarea')호출" onclick="searchByTagName('textarea')" />
-            <input type="button" class="btn btn-primary" value="searchByTagName('input')호출" onclick="searchByTagName('input')" />
-            <input type="button" class="btn btn-primary" value="searchByClassName('pink_color')호출" onclick="searchByClassName('pink_color')" />
+            <input type="button" class="btn btn-warning" value="searchByName()호출" onclick="searchByName()" />
+            <input type="button" class="btn btn-warning" value="searchById()호출" onclick="searchById()" />
+            <input type="button" class="btn btn-warning" value="searchByTagName('textarea')호출" onclick="searchByTagName('textarea')" />
+            <input type="button" class="btn btn-warning" value="searchByTagName('input')호출" onclick="searchByTagName('input')" />
+            <input type="button" class="btn btn-warning" value="searchByClassName('pink_color')호출" onclick="searchByClassName('pink_color')" />
         </div>
         <script type="text/javascript">
             function searchByName() {
                 
-                
+                // name 속성값으로 조회
+                // <.... name = "name">
+                const nameList = document.getElementsByName("name");
+                for (let idx in nameList) {
+                    nameList[idx].value = "안녕하세요";
+                }
             }
+
             function searchById() {
-                
-                
+                // id 속성으로 조회
+                // < ... id = 'myid'>
+                // const myidTag = document.getElementById("myid");
+                const myidTag = document.querySelector("#myid");
+                myidTag.value = "ID가 myid입니다."
+                myidTag.parentNode.style = "background-color:yellow;"
             }
+
             function searchByTagName(tagName) {
-                
-                
+                // const taList = document.getElementsByTagName("textarea");
+                const taList = document.querySelectorAll("textarea");
+                for (let idx in taList) {
+                    taList[idx].valu = "Textarea입니다.";
+                    taList[idx].rows = 10;
+                }
             }
 
             function searchByClassName(className) {
-                
-                
+                // const clsList = document.getElementByClassName(className);
+                const clsList = document.querySelectorAll("span.pink_color");
+                for (let idx in clsList) {
+                    clsList[idx].style = "color:pink";
+                }
             }
         </script>
     </body>
