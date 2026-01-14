@@ -41,34 +41,74 @@
     <title>Document</title>
 </head>
 <body>
-
     <button onclick="getData()">GET 요청</button>
     <button onclick="postData()">POST 요청</button>
-    
     <div id="result"></div>
 
     <script>
-    // 비동기 처리를 위한 함수 (내부적으로 Promise를 사용. await 사용)
-    async function getData() {
-        let url = "https://httpbin.org/get"; // 요청할 서버 URL
-        const response = await fetch(url); // 여기서 일단 멈춤. 그리고 끝날 때까지 기다려주겠다는 것. 
-        if (!response.ok) { // 비정상 처리 응답 (HTTP 상태 코드: 200번대 아닌 것.)
-            alert("서버 요청 실패");
-            return;
-        }
-        // 정상 응답 
-        // 응답 데이터 (response body) 조회 화면에 출력
-        const result_layer = document.getElementById("result"); 
+        async function postData() {
+            let url = "https://httpbin.org/post";
+            // 서버에 요청할 때 전달할 값
+            const payload = {
+                title: "자바스크립트 fetch 함수",
+                category: "JavaScript",
+                author: "홍길동"
+            }
+            // 요청 Header 설정
+            const reqHeader = { 
+                "Content-Type": "application/json"  // 서버에 전송되는 값의 형식 지정. JSON
+            }
+            const response = await fetch(
+                url,
+                {                      // 생략하면 get 방식
+                    method: "post",   // HTTP 요청 방식
+                    header: reqHeader,  // 요청 Header
+                    body: JSON.stringify(payload)  // 서버에 전송하는 값: 객체에서 문자열로 반환해서 전달.
+                }
+            )
+            if (!response.ok) {
+                alert("서버 요청 실패");
+                return;
+            }
+            const result_layer = document.getElementById("result");
         
-        // let info = response.body //입력 string? stream?
-        let info = await response.json();  // JSON -> JS 객체
-        // info -> 필요한 값들을 추출 
-        let url_info = info['url'];
-        let origin_info = info['origin'];
+            // let info = response.body //입력 string? stream?
+            let info = await response.json();  // JSON -> JS 객체
+            // info -> 필요한 값들을 추출 
+            let url_info = info['url'];
+            let origin_info = info['origin'];
 
-        result = `<h2>응답 결과</h2>`
-    }
+            let result = `<h2>응답 결과</h2><b>URL</b>:${url_info}<br><b>Origin</b>:${origin_info}`
+            result += `<p><pre>${JSON.stringify(info, null, 2)}</pre></p>` // pre가 코드 출력할 때 쓰는 것
+            result_layer.innerHTML = result;
+        }
 
+
+        // 비동기 처리를 위한 함수 (내부적으로 Promise를 사용. await 사용)
+        async function getData() {
+            let url = "https://httpbin.org/get"; // 요청할 서버 URL
+            const response = await fetch(url); // 여기서 일단 멈춤. 그리고 끝날 때까지 기다려주겠다는 것. 
+            if (!response.ok) { // 비정상 처리 응답 (HTTP 상태 코드: 200번대 아닌 것.)
+                alert("서버 요청 실패");
+                return;
+            }
+            // 정상 응답 
+            // 응답 데이터 (response body) 조회 화면에 출력
+            const result_layer = document.getElementById("result"); 
+ 
+            let info = await response.json(); // JSON -> JS객체
+            // info -> 필요한 값들을 추출
+            let url_info = info['url'];
+            let origin_info = info['origin'];
+
+            let result = `<h2>응답 결과</h2><b>URL</b>: ${url_info}<br><b>Origin</b>: ${origin_info}`
+            result += `<p><pre>${JSON.stringify(info, null, 2)}</pre></p>`
+            result_layer.innerHTML = result;
+        }
+        // JSON.stringify(info, null, 2): JS 객체를 JSON 문자열로 변환
+        // null: 문자열에 포함할 key를 선택. (null: 모든 key를 다 변환, ['origin', 'url']: 지정한 key만 변환)
+        // 2: 보기 좋게 들여쓰기 해서 변환할 때 들여쓰기 칸 수. (생략 - 한 줄)
     </script>
 </body>
+
 </html>
