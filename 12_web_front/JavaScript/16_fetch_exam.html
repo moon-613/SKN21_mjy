@@ -52,9 +52,21 @@
     async function getData() {
         let url = "https://httpbin.org/get"; // 요청할 서버 URL
         const response = await fetch(url); // 여기서 일단 멈춤. 그리고 끝날 때까지 기다려주겠다는 것. 
-        if (!response.ok) { // 비정상 처리 응답 (HTTP 상태 코드: 200번대)
-            
+        if (!response.ok) { // 비정상 처리 응답 (HTTP 상태 코드: 200번대 아닌 것.)
+            alert("서버 요청 실패");
+            return;
         }
+        // 정상 응답 
+        // 응답 데이터 (response body) 조회 화면에 출력
+        const result_layer = document.getElementById("result"); 
+        
+        // let info = response.body //입력 string? stream?
+        let info = await response.json();  // JSON -> JS 객체
+        // info -> 필요한 값들을 추출 
+        let url_info = info['url'];
+        let origin_info = info['origin'];
+
+        result = `<h2>응답 결과</h2>`
     }
 
     </script>
