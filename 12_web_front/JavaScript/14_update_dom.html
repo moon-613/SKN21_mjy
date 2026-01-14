@@ -1,3 +1,4 @@
+<!-- 26/01/13(화) 17:20 -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,12 +31,34 @@
         <script>
             
             function appendChildTest() {
-                
+                const layer = document.getElementById("layer");
+                // 하위 노드의 개수 
+                const cnt = layer.children.length
+                console.log("layer 하위 노드 개수", cnt);
+
+                // layer에 <p>를 추가
+                const newP = document.createElement("p");  // <p>
+                newP.setAttribute("style", "background-color:skyblue;color:white;");
+
+                const txt = document.createTextNode(`${cnt+1}번 라인 - New Line!`);
+                // p - txt
+                newP.appendChild(txt);
+                // #layer - p - txt
+                layer.appendChild(newP);
             }
+
             function insertBeforeTest() {
-                
-				
+                const layer = document.getElementById("layer");
+                const newP = document.createElement('p');
+                newP.setAttribute("style", "background-color:black;color:white;")
+
+                const txt = document.createTextNode("New Line 삽입");
+                newP.appendChild(txt);
+
+                layer.insertBefore(newP, layer.children[2]);
+                // layer의 layer.children[2]의 앞에 자식 노드로 추가.	
             }
+            
             function deleteAllNode() {
                 
 				

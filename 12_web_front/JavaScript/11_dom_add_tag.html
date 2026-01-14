@@ -1,3 +1,5 @@
+<!-- 26/01/13(화) 17:10 -->
+ <!-- 강사님 거 보고 수정해야 함 -->
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -19,7 +21,13 @@
 
         <script>
             function addTag() {
+                // <input type="text" name="tag" /> 를 div#layer에 추가.
+                tagInput = document.createElement("input");  // <input>
+                tagInput.setAttribute("type", "text");   // <input type="text"> type은 text라는 속성을 추가.
+                tagInput.setAttribute("name", "tag");    // <input name="tag"> name은 tag라는 속성을 추가. 
                 
+                layer = document.querySelector("#layer");
+                layer.appendChild(layer);
             }
         </script>
     </body>

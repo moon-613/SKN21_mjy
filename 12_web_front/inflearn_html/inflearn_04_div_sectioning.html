@@ -11,74 +11,105 @@
         </style>
     </head>
     <body>
-        <div id="wrapper">
-            <header>
-                <h1>Logo</h1>
-                <h2>menu</h2>
-            </header>
-            <main>
-                <aside><h2>Sub Menu</h2></aside>
-                <section>
-                    <h2>Main content</h2>
-                    <article>
-                        <h3>article title</h3>
-                        <p>article contents</p>
-                    </article>
-                    <article>
-                        <h3>article title</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint voluptate fugit accusamus suscipit consequuntur fuga necessitatibus voluptatem minima ex fugiat in repellendus iste dolorem nesciunt, vero eveniet, exercitationem nemo iure.
-                        </p>
-                        <p>
-                            <a href="">naver</a>
-                            <a href="">daum</a>
-                        </p>
-                        <p>Lorem ipsum dolor sit amet<b>bbb</b></p>
-                        <p>Lorem ipsum dolor sit amet<i>italic</i></p>
-                    </article>
-                </section>
-            </main>
-            <footer>
-                <h2>footer</h2>
+        <h1>테이블 태그</h1>
+        <table border="1">
+            <caption>
+                <h2>테이블 제목</h2>
+                <p>테이블 설명을 기술합니다. </p>
+            </caption>
+            <thead>
+                <tr><!-- table row -->
+                    <th scope="col">구분</th> <!-- table heading-->
+                    <th scope="col">제목1</th> <!-- scope="col" : 세로 방향의 제목들 -->
+                    <th scope="col">제목2</th>
+                    <th scope="col">제목3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td scope="row">data11</td>
+                    <td scope="row">data12</td>
+                    <td scope="row">data13</td>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td>data21</td>
+                    <td>data22</td>
+                    <td>data23</td>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <td>data31</td>
+                    <td>data32</td>
+                    <td>data33</td>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <td>data41</td>
+                    <td>data42</td>
+                    <td>data43</td>
+                </tr>
+            </tbody>
+            <tfoot> 
+                <tr>
+                    <th>합계</th>
+                    <td>total1</td>
+                    <td>total2</td>
+                    <td>total3</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <hr>
+
                 <table border="1">
-                    <tr> <!-- table row -->
-                        <td>구분</td> <!-- table data -->
-                        <td>제목 1</td> <!-- table data -->
-                        <td>제목 2</td> <!-- table data -->
-                        <td>제목 3</td> <!-- table data -->
-                    </tr>
-                    <tr> 
-                        <td>1</td> 
-                        <td>data11</td> 
-                        <td>data12</td> 
-                        <td>data13</td> 
-                    </tr>
-                    <tr> 
-                        <td>2</td> 
-                        <td>data21</td> 
-                        <td>data22</td> 
-                        <td>data23</td> 
-                    </tr>
-                    <tr> 
-                        <td>3</td> 
-                        <td>data31</td> 
-                        <td>data32</td> 
-                        <td>data33</td> 
-                    </tr>
-                    <tr> 
-                        <td>4</td> 
-                        <td>data41</td> 
-                        <td>data42</td> 
-                        <td>data43</td> 
-                    </tr>
-                    <tr> 
-                        <td>합계</td> 
-                        <td>total1</td> 
-                        <td>total2</td> 
-                        <td>total3</td> 
-                    </tr>
-                </table>
-            </footer>
-        </div>
+            <caption>
+                <h2>테이블 제목</h2>
+                <p>테이블 설명을 기술합니다. </p>
+            </caption>
+            <thead>
+                <tr><!-- table row -->
+                    <th scope="col">구분</th> <!-- table heading-->
+                    <th scope="col">제목1</th> <!-- scope="col" : 세로 방향의 제목들 -->
+                    <th scope="col">제목2</th>
+                    <th scope="col">제목3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>data11</td>
+                    <td colspan="2">data12</td>
+                    <!-- <td>data13</td> -->
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>data21</td>
+                    <td rowspan="3">data22</td>
+                    <td>data23</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>data31</td>
+                    <td>data32</td>
+                    <td>data33</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>data41</td>
+                    <td>data42</td>
+                    <td>data43</td>
+                </tr>
+            </tbody>
+            <tfoot> 
+                <tr>
+                    <th>합계</th>
+                    <td>total1</td>
+                    <td>total2</td>
+                    <td>total3</td>
+                </tr>
+            </tfoot>
+        </table>
     </body>
 </html>
