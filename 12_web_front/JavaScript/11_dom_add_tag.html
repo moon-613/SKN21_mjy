@@ -1,5 +1,5 @@
 <!-- 26/01/13(화) 17:10 -->
- <!-- 강사님 거 보고 수정해야 함 -->
+<!-- 강사님 거 보고 수정해야 함 -->
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -13,7 +13,9 @@
     <body>
         <form class="m-5">
             <div class="row mb-3" id="layer"> 
-                <input type="text" name="tag" /><input type="text" name="tag" /><input type="text" name="tag" />
+                <input type="text" name="tag" />
+                <input type="text" name="tag" />
+                <input type="text" name="tag" />
             </div>
             <button type="button" class='btn btn-primary' onclick="addTag()">tag추가</button>
             <button type="submit" class='btn btn-primary' >전송</button>
@@ -25,9 +27,9 @@
                 tagInput = document.createElement("input");  // <input>
                 tagInput.setAttribute("type", "text");   // <input type="text"> type은 text라는 속성을 추가.
                 tagInput.setAttribute("name", "tag");    // <input name="tag"> name은 tag라는 속성을 추가. 
-                
+                // <input type="text" name="tag">
                 layer = document.querySelector("#layer");
-                layer.appendChild(layer);
+                layer.appendChild(tagInput);
             }
         </script>
     </body>

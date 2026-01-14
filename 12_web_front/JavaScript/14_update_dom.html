@@ -60,16 +60,41 @@
             }
             
             function deleteAllNode() {
-                
+                // layer의 모든 하위 노드들 삭제
+                const layer = document.getElementById('layer');
+                // layer의 자식 노드들이 있는 동안 첫번째 자식 노드들을 삭제 
+                while (layer.hasChildNodes()) {
+                    // 부모노드.removeChild (삭제할 자식노드);
+                    layer.removeChild(layer.firstChild);
+                }
 				
             }
             function deleteNodeByIdx() {
-                
+                // #idx에서 index를 읽어서 #layer에 자식 노드 중 index번째 것을 삭제
+                const idx = document.getElementById("idx");
+                if (isNaN(idx.value)) { // isNaN(value) -> value가 NaN인지 여부를 확인 -> True면 NaN (숫자 아니다. 숫자로 바꿀 수 없다.)
+                alert("삭제할 index는 정수를 입력하세요.");
+                idx.focus();
+                idx.value ="";
+                return;
+                }
+                // div#layer를 조회
+                const layer = document.getElementById("layer");
+                // index와 children 개수를 비교
+                if (idx.length > layer.children.length) {
+                    alert("Index의 범위를 넘었습니다.");
+                    return;
+                }
+                // 삭제 - 부모노드.removeChild(삭제할 자식 노드)
+                layer.removeChild(layer.children[idx.value]);
 				
             }
             function innerHTMLtest() {
-                
-				
+                const layer = document.getElementById("layer");
+                // 자식/자손 노드들 중 text 노드들만 조회해서 문자열 (str)로 반환
+                console.log("layer.innerText:", layer.innerText);
+                // 자식 노드로 대입한 문자열로 replace (대치)
+				layer.innerText = "안녕하세요"
             }
         </script>
     </body>
