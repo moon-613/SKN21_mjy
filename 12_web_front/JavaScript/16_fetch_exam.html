@@ -1,3 +1,4 @@
+<!-- 26/01/14(수) 11:30 -->
 <!-- 
 - fetch()는 네트워크 요청(Network Request)을 보내고 응답(Response)을 받기 위한 Javascript 함수​
     - 기존의 XMLHttpRequest보다 더 간결하고 Promise 기반으로 설계되어 비동기 코드 흐름과 잘 맞는다.​
@@ -40,15 +41,18 @@
     <title>Document</title>
 </head>
 <body>
-    
-
-    <script>
-
-
-    </script>
 
     <button onclick="getData()">GET 요청</button>
     <button onclick="postData()">POST 요청</button>
+    
+    <div id="result"></div>
+
+    <script>
+    // 비동기 처리를 위한 함수 (내부적으로 Promise를 사용. await 사용)
+    async function getData() {
+
+    }
+
+    </script>
 </body>
-<div id="result"></div>
 </html>

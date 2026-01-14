@@ -27,7 +27,25 @@
 		{name:'강감찬', age:43, address:'인천'},
 		{name:'김구', age:32, address:'광주'},
 	]
-	function makeTable(){
+
+	function makeTable() {
+		// innerHTML 사용
+		const tbody = document.getElementById("tbody");
+		// 문자열로 tbody에 추가할 html 코드를 작성
+		let result ="";
+		for (let idx in person_info) {
+			let name = person_info[idx]['name'];
+			let age = person_info[idx]['age'];
+			let address = person_info[idx]['address'];
+
+			result += `<tr><td>${name}</td><td>${age}</td><td>${address}</td></tr>`
+		}
+		console.log(result);
+		tbody.innerHTML = result;
+	}
+
+
+	function makeTable_1(){
 		const tbody = document.getElementById("tbody");
 		//tbody내의 모든 tr(행)들을 삭제
 		
@@ -37,14 +55,15 @@
 		// 위 내용이 있어야 지우고 만들고 함. 없으면 계속 추가됨.
 		
 		for (idx in person_info) {
-			info = person_info[idx]
-			var tr = document.createElement("tr");
-			var td1 = document.createElement("td");
+			info = person_info[idx]  // 개별 데이터 -> 테이블의 한 행으로 추가. 
+			var tr = document.createElement("tr");  // 행 (tr)
+			var td1 = document.createElement("td");  // 열 (td) X 3개 (이름, 나이, 주소)
 			var td2 = document.createElement("td");
 			var td3 = document.createElement("td");
-			var name = document.createTextNode(info['name']);
-			var age = document.createTextNode(info['age']);
-			var addr = document.createTextNode(info['address']);
+			var name = document.createTextNode(info['name']); // 이순신
+			var age = document.createTextNode(info['age']);   // 30
+			var addr = document.createTextNode(info['address']);  // 서울
+			// tbody -> tr -> td -> 내용
 			
 			td1.appendChild(name);
 			td2.appendChild(age);
