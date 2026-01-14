@@ -51,7 +51,10 @@
     // 비동기 처리를 위한 함수 (내부적으로 Promise를 사용. await 사용)
     async function getData() {
         let url = "https://httpbin.org/get"; // 요청할 서버 URL
-        const response = await fetch(); // 여기서 일단 멈춤. 그리고 끝날 때까지 기다려주겠다는 것. 
+        const response = await fetch(url); // 여기서 일단 멈춤. 그리고 끝날 때까지 기다려주겠다는 것. 
+        if (!response.ok) { // 비정상 처리 응답 (HTTP 상태 코드: 200번대)
+            
+        }
     }
 
     </script>
