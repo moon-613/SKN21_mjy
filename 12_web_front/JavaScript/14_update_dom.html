@@ -91,11 +91,21 @@
             }
             function innerHTMLtest() {
                 const layer = document.getElementById("layer");
-                // 자식/자손 노드들 중 text 노드들만 조회해서 문자열 (str)로 반환
+                // 자식/자손 노드들 중 text 노드들만 조회해서 문자열 (string)로 반환
                 console.log("layer.innerText:", layer.innerText);
+                
+                // 자식/자손 노드들을 문자열 (string)로 반환. (Element/Text 노드 모두 포함)
+                console.log("layer.innerText:", layer.innerHTML);
+
                 // 자식 노드로 대입한 문자열로 replace (대치)
-				layer.innerText = "안녕하세요"
+				// layer.innerText = "안녕하세요.";
+
+                // tag -> ElementNode, 문자열 
+                layer.innerHTML = "<b> 안녕하세요. </b><br><i>반갑습니다.</i>";
             }
         </script>
     </body>
 </html>
+
+
+<!-- 113줄 강사님 거 보고 수정 -->

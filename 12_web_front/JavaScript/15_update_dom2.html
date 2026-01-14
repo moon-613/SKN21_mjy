@@ -1,3 +1,4 @@
+<!-- 26/01/14(수) 10:30 -->
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +21,7 @@
 </table>
 </div>
 <script type="text/javascript">
-	person_info = [
+	person_info = [                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 		{name:'이순신', age:30, address:'서울'},
 		{name:'유관순', age:25, address:'경기도'},
 		{name:'강감찬', age:43, address:'인천'},
@@ -30,9 +31,10 @@
 		const tbody = document.getElementById("tbody");
 		//tbody내의 모든 tr(행)들을 삭제
 		
-		while(tbody.hasChildNodes()){
-			tbody.removeChild(tbody.firstChild);
-		}
+		// while(tbody.hasChildNodes()){
+		// 	tbody.removeChild(tbody.firstChild);
+		// }
+		// 위 내용이 있어야 지우고 만들고 함. 없으면 계속 추가됨.
 		
 		for (idx in person_info) {
 			info = person_info[idx]
