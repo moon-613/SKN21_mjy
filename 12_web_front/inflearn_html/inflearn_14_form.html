@@ -7,22 +7,50 @@
 </head>
 <body>
     <h1>Join form</h1>
-    <form action="">
-
-        <p>
-            <label for="username">Name:</label>
-            <input type="text" id="username"> 
-        </p>
-        <!-- 뒤에 id="username"를 넣어줌으로 name을 누르면 input으로 커서가 가게 지정  -->
+    <form action="#" method="POST">
+        <fieldset>
+            <legend>필수 사항</legend>
+            <p>
+                <label for="username">Name:</label>
+                <input type="text" id="username" required> 
+            </p>
+            <!-- 뒤에 id="username"를 넣어줌으로 name을 누르면 input으로 커서가 가게 지정  -->
+            
+            <p>
+                <label for="userpw">Password:</label>
+                <input type="password" id="userpw" required> 
+            </p>
+            <!-- type이 password면 알아보지 못하게 띄움 -->
         
-        <p>
-            <label for="userpw">Password:</label>
-            <input type="password" id="userpw"> 
-        </p>
-        <!-- type이 password면 알아보지 못하게 띄움 -->
-    
+        </fieldset>
+        <fieldset>
+            <legend>옵션 사항</legend>
+            <P>
+                <label for="address">주소</label>
+                <select name="address" id="address">
+                    <option value="서울시">서울시</option>
+                    <option value="경기도">경기도</option>
+                    <option value="제주도">제주도</option>
+                </select>
+            </P>
+            <p>
+                <span>성별</span>
+                <label for="male">남성</label>
+                <input type="radio" name="gender" id="male" value="남성"> 
+                <label for="female">여성</label>
+                <input type="radio" name="gender" id="female" value="여성"> 
+            </p>
+            <p>
+                <span>관심사항</span>
+                <label for="HTML">HTML</label>
+                <input type="checkbox" 
+            </p>
+        </fieldset>
         <p>
             <input type="submit" value="가입하기">
+             <!-- <button>
+                 <input type="image" src="search_4367807.png" alt="가입하기">
+            </button> -->
         </p>
         <!-- type="submit" : 전송 -->
     </form>
