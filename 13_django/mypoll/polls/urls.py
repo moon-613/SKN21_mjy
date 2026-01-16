@@ -4,3 +4,16 @@
 # 매핑 설정 - path("url경로", View, name="설정 식별 이름") 함수 이용
 
 from django.urls import path
+from . import views  # 상대 경로로 import . : 현재 모듈이 있는 패키지
+
+app_name = "polls"  # 전체 설정에 대한 prefix(namespace). 설정 name에 공통적으로 앞에 붙일 이름 ("app_name:name")
+
+urlpatterns = [
+    path("welcome", views.welcome, name="welcome"),
+    path("list", views.list, name="list"),
+    path("vote_form/<int:question_id>", views.vote_form, name="vote_form"),
+]
+# polls/vote_form/<path 파라미터값 타입:view의 파라미터 변수명>
+# <int:     # path parameter값을 int로 전달해라.
+# <   : question_id>  # view의 question_id 변수로 전달해라. 
+# type: int, str
