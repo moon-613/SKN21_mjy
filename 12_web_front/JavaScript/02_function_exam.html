@@ -8,7 +8,7 @@
     </head>
     <body>
         <h2>함수 예제</h2>
-
+        
         <script>
 
             //1. 함수 정의
@@ -29,7 +29,7 @@
 
             // hello2("문지영", 27);
             // hello2();
-            // hello2(age=30);    // JavaScript는 keyword 인자가 없다. 30 -> name
+            // hello2(age=30);    // JavaScript는 keyword 인자가 없다. 30 -> name. 무조건 순서대로 값을 넣어야 한다.
             // hello2(null, 27)
 
             //5. 기본값이 있는 파라미터.
@@ -44,6 +44,7 @@
                 let name = prompt("이름을 입력하세요"); //사용자 입력
                 return `이름 : ${name}`;
             }
+            
 
             // let name = hello4();
             // console.log(name);
@@ -59,11 +60,11 @@
 
             //6. 함수 리터럴.
             let hello6 = function (name) {
-                alert(name);
+                alert(name);   // alert은 확인 버튼만 있다. confirm은 확인 취소 버튼 있고 true, false 반환. 
             };
 
             // hello6("이순신");
-
+            
             //7. 함수를 argument로 전달.
             // 값을 처리하는 로직을 caller로부터 받아서 사용
             function worker(func) {

@@ -1,3 +1,5 @@
+# config/urls.py -> URL Conf(Url Dispatcher, URL Mapping)
+# url과 view를 연결. 어떤 url로 요청이 들어오면 어떤 view가 실행될지를 연결 및 설정
 """
 URL configuration for config project.
 
@@ -16,7 +18,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from polls.views import welcome
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('polls/welcome', welcome, name="poll_welcome"),  # 1. client 요청 경로, 2. 호출할 view 함수 지정, 3. name="설정 이름" 
 ]
+# 요청경로: 'polls/welcome/ -> "http://IP:port/    polls/welcome"
