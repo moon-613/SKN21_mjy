@@ -24,3 +24,4 @@ urlpatterns = [
     path('polls/welcome', welcome, name="poll_welcome"),  # 1. client 요청 경로, 2. 호출할 view 함수 지정, 3. name="설정 이름" 
 ]
 # 요청경로: 'polls/welcome/ -> "http://IP:port/    polls/welcome"
+
