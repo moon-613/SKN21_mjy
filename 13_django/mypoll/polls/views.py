@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse    # url conf의 설정 이름으로 url을 조회하는 함수 
 ## path("url", view함수, name="name")
 # reverse("name") => url 
+from django.db import transaction   # DB Transaction 처리 
 from datetime import datetime
 from .models import Question, Choice
 
@@ -72,7 +73,7 @@ def list(request):
 # template: 정상 - polls/vote_form.html
 #           오류 - polls/error.html
 
-def                                                                                                                                                                                                                                                                      vote_form(request, question_id):
+def vote_form(request, question_id):                                                                                                                                                                                                                                                                     
     # question_id 파라미터 - path parameter 값을 받을 변수
     # view함수의 두 번째 파라미터부터는 path parameter를 받을 변수들
     ## 파라미터 변수명은 urls.py에 등록한 변수명으로 선언하면 된다.
@@ -196,15 +197,27 @@ def vote_create(request):
                 request, "polls/vote_create.html",
                 {"error_msg":"보기는 두 개 이상 입력해야 합니다.", "question_text":question_text, "choice_list": choice_list}
             )
-        
-        # 검증 통과 -> DB에 저장 (Insert)
-        # 모델 객체.save()
-        q = Question(question_text=question_text)  # id/pub_date 자동 입력.
-        q.save() 
+        try:
+            # with block을 정상적으로 처리하면 commit 실행. 
+            # with block 실행 중 Exception이 발생하면 rollback (Insert 작업 처음 상태로 돌린다.) 
+            
+            with transaction.atomic():  # Transaction 시작
+                # 검증 통과 -> DB에 저장 (Insert)
+                # 모델 객체.save()
+                q = Question(question_text=question_text)  # id/pub_date 자동 입력.
+                q.save() 
 
-        for c in choice_list:
-            choice = Choice(choice_text=c, question=q) # id/vote 는 자동 입력되게 생략. default=0으로 셋팅.
-            choice.save()
+                # raise Exception("문제가 발생했습니다.")
+
+                for c in choice_list:
+                    choice = Choice(choice_text=c, question=q) # id/vote 는 자동 입력되게 생략. default=0으로 셋팅.
+                    choice.save()
+
+        except Exception as e:
+            # error page로 이동
+            return render(request, #"polls/error.html", 
+                          "error.html",  # 공통 error page
+                          {"error_message":f"질문을 저장하는 도중 문제가 발생했습니다. 관리자에게 문의하세요."})
 
         # 4. 응답- list로 redirect 방식으로 이동
         return redirect(reverse("polls:list"))

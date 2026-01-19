@@ -23,10 +23,10 @@
                 <div> <input type="text" name="choice_text" size="100"><br> </div>
                 <div> <input type="text" name="choice_text" size="100"><br> </div>
                 {% else %} <!-- choice_list = ["보기1", "보기2"] -->
-                {% for choice in choice_list %}
-                    <div> <input type="text" name="choice_text" size="100" value="{{choice}}"><br> </div>
-                { % endfor %}
-            {% endif %}
+                    {% for choice in choice_list %}
+                        <div> <input type="text" name="choice_text" size="100" value="{{choice}}"><br> </div>
+                    {% endfor %}
+                {% endif %}
         </div>
         <div id="btn_layer">
             <button type="button" onclick="addChoice();">보기 추가</button>
