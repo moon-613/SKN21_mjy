@@ -15,14 +15,14 @@
 <!-- 보기 -->
 <!-- <form action="/polls/vote" method="post"> -->
 <form action="{% url 'polls:vote' %}" method="post">
-{%csrf_token%}  <!-- post일 때 이거 반드시 넣어야 함 -->
-<input type="hidden" name="question_id" value="{{question.pk}}">
-{% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" value="{{choice.pk}}" id="{{choice.pk}}">
-    <label for="{{choice.pk}}">{{choice.choice_text}}</label><br>
-{% endfor %}
-<button type="submit">투표</button>
-<button type="reset">선택해제</button>
+    {%csrf_token%}  <!-- post일 때 이거 반드시 넣어야 함 -->
+    <input type="hidden" name="question_id" value="{{question.pk}}">
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" class="form-check-input" value="{{choice.pk}}" id="{{choice.pk}}">
+        <label for="{{choice.pk}}">{{choice.choice_text}}</label><br>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">투표</button>
+    <button type="reset" class="btn btn-primary">선택해제</button>
 </form>
 
 {% endblock contents %}
