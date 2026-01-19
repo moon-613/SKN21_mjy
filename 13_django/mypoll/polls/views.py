@@ -72,7 +72,7 @@ def list(request):
 # template: 정상 - polls/vote_form.html
 #           오류 - polls/error.html
 
-def vote_form(request, question_id):
+def                                                                                                                                                                                                                                                                      vote_form(request, question_id):
     # question_id 파라미터 - path parameter 값을 받을 변수
     # view함수의 두 번째 파라미터부터는 path parameter를 받을 변수들
     ## 파라미터 변수명은 urls.py에 등록한 변수명으로 선언하면 된다.
@@ -150,3 +150,61 @@ def vote_result(request, question_id):
     return render(
         request, "polls/vote_result.html", {"question":question}
     )
+
+
+# 설문 (질문)을 등록 처리
+# 요청 URL: /polls/vote_create
+# view함수: vote_create
+#        - HTTP 요청 방식에 따라 입력 양식을 제공할 지 처리할 지 결정. 
+#        - GET: 입력 양식을 제공 (설문 문제와 보기를 입력할 수 있는 화면)
+#        - POST: 등록처리 
+# 응답: - GET 처리: (template) polls/vote_create.html
+#      - POST 처리: redirect 방식 응답 ==> list View를 요청 
+# Http 요청 방식 조회 - request.method (str: "GET", "POST")
+
+def vote_create(request):
+    http_method = request.method
+    if http_method == "GET":
+        # 입력 폼 제공
+        return render(request, "polls/vote_create.html")
+
+    elif http_method == "POST":
+        # 등록 처리 
+        # 1. 요청 (path) 파라미터 읽기
+        # 2. 요청 파라미터 검증 (조건 안 맞거나, 숫자여야 하는데 문자열 들어왔거나, 개수 안 맞거나 등) -성공-> 처리, 실패-> 입력 폼 페이지(error)를 응답
+        # 3. 업무 처리 -> DB 작업
+        # 4. 응답
+        
+        # 요청 파라미터 조회 - POST 방식일 땐 post, get방식 일 땐 get : request.POST(GET) => dictionary구현체
+        ## 요청 파라미터 중 question_text를 조회
+        question_text = request.POST.get("question_text")
+        ### 요청 파라미터 중 choice_text를 조회 (같은 이름으로 여러 개 전달)
+        #### choice_text=보기1&choice_text=보기2& ...   # choice_text가 여러 개 넘어오면 get으로 읽어야 함.
+        choice_list = request.POST.getlist("choice_text")  # list[str]
+
+        # 요청 파라미터 검증 (질문: 1글자 이상, 보기: 2개 이상 각각 1글자 이상)
+        if not question_text.strip(): # 빈 문자열일 경우 
+            return render(
+                request, "polls/vote_create.html",
+                {"error_msg":"문제를 한 글자 이상 입력하세요.", "question_text":question_text, "choice_list": choice_list}
+            )
+        
+        ## 보기 검증. choice_text가 넘어온 게 없거나  
+        ##         (choice_text가 넘어온 게 있는데 값이 있는 것이 2개가 안 되면) ==> 검증 실패
+        if not choice_list or (choice_list and len([c for c in choice_list if c.strip()]) < 2):
+            return render(
+                request, "polls/vote_create.html",
+                {"error_msg":"보기는 두 개 이상 입력해야 합니다.", "question_text":question_text, "choice_list": choice_list}
+            )
+        
+        # 검증 통과 -> DB에 저장 (Insert)
+        # 모델 객체.save()
+        q = Question(question_text=question_text)  # id/pub_date 자동 입력.
+        q.save() 
+
+        for c in choice_list:
+            choice = Choice(choice_text=c, question=q) # id/vote 는 자동 입력되게 생략. default=0으로 셋팅.
+            choice.save()
+
+        # 4. 응답- list로 redirect 방식으로 이동
+        return redirect(reverse("polls:list"))
