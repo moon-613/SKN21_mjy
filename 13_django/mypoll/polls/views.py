@@ -10,7 +10,7 @@ from .models import Question, Choice
 
 # 설문 welcome page view
 # 요청 - 인사말 화면을 응답. 
-def welcome (request):  # 최소 한 개 파라미터는 선언해야 함
+def welcome (request):     # 최소 한 개 파라미터는 선언해야 함
     print("Welcome 실행")
     # 요청 처리
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -84,7 +84,7 @@ def vote_form(request, question_id):
         return render(
             request, 
             "polls/vote_form.html",
-            {"question":question}
+            {"question":question}   # context_value
         )
     except:
         # print(f"{question_id}의 질문이 없습니다.")
@@ -95,7 +95,7 @@ def vote_form(request, question_id):
         )
 
 
-# 설문 하기  
+# 설문 처리하기  
 ## 선택한 보기(Choice)의 votes를 1 증가. 투표 결과를 보여주는 페이지로 이동. 
 
 # 요청 URL: polls/vote
@@ -120,10 +120,13 @@ def vote(request):
 
         # TODO 업데이트 결과를 보여주는 View(vote_result)를 redirect 방식으로 요청 
         # urls.py에 path에 등록된 이름으로 url을 조회
-        url = reverse("polls:vote_result")
-        return redirect("/polls/vote_result/"+question_id)
+        ## app_name: 설정 이름
+        ## path parameter 있는 경우 args=[path parameter 값, ..]
+        url = reverse("polls:vote_result", args=[question_id])
+        print(type(url), url)
+        return redirect(url)
 
-        # # 결과 페이지 -     question 조회
+        # # 결과 페이지 - question 조회
         # question = Question.objects.get(pk=question_id)
         # return render(
         #     request, "polls/vote_result.html", {"question":question}
