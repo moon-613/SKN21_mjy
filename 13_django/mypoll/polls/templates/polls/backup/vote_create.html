@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설문 질문 입력</title>
+</head>
+<body>
+    <!-- <a href="/polls/list">목록</a>   -->
+    <a href="{% url 'polls:list' %}">목록</a>  
+    <hr>
+
+    <h1>설문 문제 등록</h1>
+    {% if error_msg %}
+        <div style = "color:brown">{{error_msg}}</div>
+    {% endif %}
+    <form method="post">   <!-- default: GET방식 -->
+        {% csrf_token %}
+        <h3>질문</h3>
+        <input type="text" name="question_text" size="100" value="{{question_text}}">
+        <h3>보기</h3>
+        <div id="choice_layer">
+            {% if not choice_list %}
+                <div> <input type="text" name="choice_text" size="100"><br> </div>
+                <div> <input type="text" name="choice_text" size="100"><br> </div>
+            {% else %} <!-- choice_list = ["보기1", "보기2"] -->
+                {% for choice in choice_list %}
+                    <div> <input type="text" name="choice_text" size="100" value="{{choice}}"><br> </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div id="btn_layer">
+            <button type="button" onclick="addChoice();">보기 추가</button>
+            <button type="button" onclick="delChoice();">보기 삭제</button>
+            <button type="submit">문제 등록</button>
+        </div>
+    </form>
+    <script>
+        function addChoice(){
+            // <input type="text" name="choice_text" size="100"><br> 를 추가하는 것
+            const input = document.createElement("input");
+            input.setAttribute("type", "text");
+            input.setAttribute("name", "choice_text");
+            input.setAttribute("size", 100);
+            // input.setAttribute("required", true);
+            const br = document.createElement("br");
+
+            // input + br을 묶을 div 생성
+            const div = document.createElement("div")
+            div.appendChild(input);
+            div.appendChild(br);
+
+            // 추가할 choice_layer를 조회
+            const layer = document.querySelector("#choice_layer");
+            layer.appendChild(div);  
+        }
+        function delChoice() {
+            // #choice_layer에서 보기 입력 폼을 하나 삭제 
+            // 보기 입력이 두 개면 삭제하지 않는다. (최소 두 개는 유지)
+            // 삭제: 부모 노드. removeChild("삭제할 노드")
+            const layer = document.querySelector("#choice_layer");
+            if (layer.children.length > 2) {
+                // 삭제
+                layer.removeChild(layer.lastChild);  // 마지막 자식 노드 삭제 
+            } else {
+                // 유지
+                alert("보기가 두 개면 삭제가 안됩니다.");
+            }
+        }
+    </script>
+</body>
+</html>
