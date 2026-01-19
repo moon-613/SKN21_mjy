@@ -1,0 +1,12 @@
+{% extends "layout/main_layout.html" %}
+
+{% block title %}질문 등록 - form.py{% endblock title %}
+{% block contents %}
+
+<h1>설문 문제 등록 - forms.py 이용</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{q_form}}
+</form>
+{% endblock contents %}

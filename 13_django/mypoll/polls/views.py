@@ -163,7 +163,7 @@ def vote_result(request, question_id):
 #      - POST 처리: redirect 방식 응답 ==> list View를 요청 
 # Http 요청 방식 조회 - request.method (str: "GET", "POST")
 
-def vote_create(request):
+def vote_create_old(request):
     http_method = request.method
     if http_method == "GET":
         # 입력 폼 제공
@@ -221,3 +221,22 @@ def vote_create(request):
 
         # 4. 응답- list로 redirect 방식으로 이동
         return redirect(reverse("polls:list"))
+
+
+from .forms import QuestionForm 
+
+# forms.py의 Form을 이용한 요청 파라미터 처리 view 함수
+def vote_create(request):
+ 
+    if request.method == "GET":
+        # 등록 폼 페이지 반환
+        ## 등록 폼 -> forms.QuestionForm 를 이용 
+        q_form = QuestionForm()
+
+        return render(
+            request, "polls/vote_create_form.html", {"q_form":q_form}
+        )
+
+    elif request.method == "POST":
+        # 등록 처리
+        pass
