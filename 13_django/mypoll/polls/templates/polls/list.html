@@ -5,17 +5,17 @@
 {% block title %}설문 목록{% endblock title %}
 {% block contents %}
 <h1>설문 목록</h1>
-<ul>
+<ul class="list-group">
     <!-- 반복문 - 
         question_list(context_value:QuerySet)의 Question들을 출력 -->
     {% for question in question_list %}
-        <li>
+        <li class="list-group-item list-group-item-action">
             <!-- <a href="/polls/vote_form/{{question.pk}}"> -->
             <a href="{% url 'polls:vote_form' question.pk %}">
 
                 {{question.pk}}. {{question.question_text}}  
-                - 글자수: {{question.question_text | length}}
-                - {{question.pub_date | date:'Y-m-d'}}   <!-- template 문법 필터 중 date 사용 -->
+                {# - 글자수: {{question.question_text | length}} - {{question.pub_date | date:'Y-m-d'}} #}  
+                <!-- template 문법 필터 중 date 사용 -->
             </a>
         </li>
     {% empty %}
@@ -23,4 +23,13 @@
         <b>아직 등록된 질문이 없습니다.</b>
     {% endfor %}
 </ul>
+
+<!-- paging 처리 - 페이지 링크들 출력 -->
+<div id="page_group">
+    {# 이전 페이지 그룹으로 이동하는 버튼 #}
+    
+    {# 현재 페이지 그룹의 페이지로 이동하는 랑크 #}
+
+    {# 이전 페이지 그룹으로 이동하는 버튼 #}
+</div>
 {% endblock contents %}

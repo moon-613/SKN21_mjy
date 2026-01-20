@@ -4,6 +4,7 @@ from django.urls import reverse    # url conf의 설정 이름으로 url을 조�
 ## path("url", view함수, name="name")
 # reverse("name") => url 
 from django.db import transaction   # DB Transaction 처리 
+from django.core.paginator import Paginator
 from datetime import datetime
 from .models import Question, Choice
 
@@ -77,6 +78,38 @@ def list(request):
     current_page = int(request.GET.get("page", 1))  # 현재 조회 요청이 들어온 페이지 번호. get 방식의 요청파라미터.
     # 혹시 page값 넘어온 게 없으면 default = 1을 줘 라는 뜻으로 1.
 
+
+    # Paginator
+    q_list = Question.objects.all().order_by("-pk") 
+    pn = Paginator(q_list, paginate_by)
+
+    # 현재 페이지가 속한 PageGroup의 시작 index, 종료 페이지의 index
+    start_index = int((current_page -1) / page_group_count) * page_group_count
+    end_index = start_index + page_group_count
+
+    page_range = pn.page_range[start_index:end_index] # 시작 ~ 끝 페이지 번호 조회
+
+    # template에 전달할 context value dictionary
+    context_value = {
+        "page_range" : page_range,
+        "question_list" : pn.page(current_page)   # page 객체 안에 [Question]
+    }
+
+    # PageGroup의 시작 페이지가 이전 페이지가 있는지 여부, 이전 페이지 번호
+    # PageGroup의 마지막 페이지가 다음 페이지가 있는지 여부, 다음 페이지 번호
+    start_page = pn.page(page_range[0])  # 시작 페이지 Page 객체
+    end_page = pn.page(page_range[-1])   # 마지막 페이지 Page 객체
+
+    if start_page.has_previous():
+        context_value['has_previous'] =  start_page.has_previous()
+        context_value["previous_page_number"] = start_page.previous_page_number()
+
+    if end_page.has_next():
+        context_value['has_next'] = end_page.has_next()
+        context_value['next_page_number'] = end_page.next_page_number()
+
+    # 응답 template 호출
+    return render(request, "polls/list.html", context_value)
 
 
 
