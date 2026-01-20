@@ -51,7 +51,8 @@ def welcome_old(request):
 ## 요청 url: polls/list
 ## view함수: list
 ## template: polls./list.html 
-def list(request):
+################################################################
+def list_old(request):
     # 1. DB에서 질문 목록 조회 conn -> cursor -> sql 실행 -> Model 사용 
     question_list = Question.objects.all().order_by("-pub_date")
     # 2. 응답 페이지 생성(template 사용) -> 반환
@@ -60,6 +61,23 @@ def list(request):
         "polls/list.html", 
         {"question_list":question_list}      
     )
+
+################################################################
+# Paging 처리 list
+
+# - template 호출 전달할 Context Value
+#    - 현재 페이지의 데이터 - Page 객체
+#    - 현재 페이지가 속한 페이지 그룹의 페이지 번호 start/end index
+#    - 현재 페이지 그룹의 시작 페이지 이전 페이지가 있는지 여부, 있다면 이전 페이지 번호
+#    - 현재 페이지 그룹의 끝 페이지 다음 페이지가 있는지 여부, 있다면 다음 페이지 번호
+def list(request):
+    paginate_by = 10       # 한 페이지 당 데이터 개수
+    page_group_count = 10  # 페이지 그룹 당 페이지 수 
+    # http://ip:port/polls/list?page=6
+    current_page = int(request.GET.get("page", 1))  # 현재 조회 요청이 들어온 페이지 번호. get 방식의 요청파라미터.
+    # 혹시 page값 넘어온 게 없으면 default = 1을 줘 라는 뜻으로 1.
+
+
 
 
 # 개별 설문을 할 수 있는 페이지(설문 폼)로 이동 
