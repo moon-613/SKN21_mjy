@@ -13,7 +13,8 @@
             <!-- <a href="/polls/vote_form/{{question.pk}}"> -->
             <a href="{% url 'polls:vote_form' question.pk %}">
 
-                {{question.pk}}. {{question.question_text}}  <!-- - 글자수: {{question.question_text | length}} -->
+                {{question.pk}}. {{question.question_text}}  
+                - 글자수: {{question.question_text | length}}
                 - {{question.pub_date | date:'Y-m-d'}}   <!-- template 문법 필터 중 date 사용 -->
             </a>
         </li>

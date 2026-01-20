@@ -20,9 +20,20 @@ class QuestionForm(forms.Form):
             attrs={"class":"form-control"}   # 입력 tag의 attribute 설정. 
         )
     )
-
+class ChoiceForm(forms.Form):
     choice_text = forms.CharField(
-        label="보기",
+        label="",  # 라벨을 생성하지 않게 한다.
         max_length=200,
-        required=True
+        required=True,
+        widget=forms.TextInput(attrs={"class":"form-control"})
     )
+
+# ChoiceForm을 이용해서 FormSet 클래스를 생성
+# FormSet: Form + Set : Form들의 집합
+#          Form클래스의 내용을 중복해서 가지는 클래스 
+#          같은 이름으로 여러 개의 입력을 받아야 할 때.
+#          특정 input 양식을 반복적으로 여러 개 가지는 입력 페이지를 구성할 때.
+ChoiceFormSet = forms.formset_factory(
+    ChoiceForm,  # Form 클래스
+    extra=2,     # Form을 몇 개 (반복해서) 만들지 개수 
+)

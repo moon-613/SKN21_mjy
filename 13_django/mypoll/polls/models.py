@@ -32,6 +32,7 @@ class Choice(models.Model):
     question = models.ForeignKey(
         Question,  # 참조할 model class
         on_delete=models.CASCADE  # 참조값이 삭제된 경우 어떻게 할지 -> cascade: 삭제 
+        # , related_name="my_choice" # q.my_choice.all()
     )  # FK -> Question의 ID를 참조
 
     def __str__(self):

@@ -180,7 +180,7 @@ def vote_create_old(request):
         ## 요청 파라미터 중 question_text를 조회
         question_text = request.POST.get("question_text")
         ### 요청 파라미터 중 choice_text를 조회 (같은 이름으로 여러 개 전달)
-        #### choice_text=보기1&choice_text=보기2& ...   # choice_text가 여러 개 넘어오면 get으로 읽어야 함.
+        #### choice_text=보기1&choice_text=보기2& ...   # choice_text가 같은 이름으로 여러 개 넘어오면 get으로 읽어야 함.
         choice_list = request.POST.getlist("choice_text")  # list[str]
 
         # 요청 파라미터 검증 (질문: 1글자 이상, 보기: 2개 이상 각각 1글자 이상)
@@ -223,7 +223,7 @@ def vote_create_old(request):
         return redirect(reverse("polls:list"))
 
 
-from .forms import QuestionForm 
+from .forms import QuestionForm, ChoiceFormSet
 
 # forms.py의 Form을 이용한 요청 파라미터 처리 view 함수
 def vote_create(request):
@@ -231,12 +231,24 @@ def vote_create(request):
     if request.method == "GET":
         # 등록 폼 페이지 반환
         ## 등록 폼 -> forms.QuestionForm 를 이용 
-        q_form = QuestionForm()
+        q_form = QuestionForm()   # 질문
+        c_formset = ChoiceFormSet() # 보기들
+        # <input type=text> X extra 개수 => 이름(index로 관리)
+        #      prefix - index번호 - field이름 (form-0-choice_text)
 
         return render(
-            request, "polls/vote_create_form.html", {"q_form":q_form}
+            request, "polls/vote_create_form.html", {"q_form":q_form, "c_formset":c_formset}
         )
 
     elif request.method == "POST":
         # 등록 처리
-        pass
+        # 요청 파라미터 조회+검증 -> Form을 이용해서 조회/검증
+        # 요청 파라미터 조회해서 검증을 통과하면 Form객체에 넣는다.
+        # 요청 파라미터값들은 form의 dictionary로 관리되고 cleaned_data 속성으로 조회 가능. 
+        q_form = QuestionForm(request.POST) # 요청 파라미터의 값을 속성으로 가지는 Form
+        c_formset = ChoiceFormSet(request.POST) #, prefix='choice') 생성할 때 prefix를 지정했으면 여기서도 지정해줘야 함. 
+        # print("---------------", q_form)
+        # print("---------------", c_formset)
+
+        # 검증을 통과했는지 여부 - form.is_valid(): bool (True - 통과, False - 검증실패)
+        
