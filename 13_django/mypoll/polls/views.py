@@ -8,8 +8,6 @@ from django.core.paginator import Paginator
 from datetime import datetime
 from .models import Question, Choice
 
-# Create your views here.
-
 # 설문 welcome page view
 # 요청 - 인사말 화면을 응답. 
 def welcome (request):     # 최소 한 개 파라미터는 선언해야 함
@@ -51,7 +49,7 @@ def welcome_old(request):
 ## 전체 question들을 조회해 목록 html을 반환 
 ## 요청 url: polls/list
 ## view함수: list
-## template: polls./list.html 
+## template: polls/list.html 
 ################################################################
 def list_old(request):
     # 1. DB에서 질문 목록 조회 conn -> cursor -> sql 실행 -> Model 사용 

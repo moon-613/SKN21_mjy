@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',  # polls app 등록
-    'account',  # account app 등록
+    # 'account',  # account app 등록
 ]
 
 MIDDLEWARE = [
@@ -116,7 +116,7 @@ USE_TZ = True
 ######################################
 # 사용자 관리 시 사용하는 UserModel 변경
 ######################################
-AUTH_USER_MODEL = "account.CustomUser"
+# AUTH_USER_MODEL = "account.CustomUser"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
