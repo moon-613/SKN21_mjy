@@ -8,6 +8,7 @@
 3. 가상환경
  - uv venv .venv --python=3.12
  - .venv\Scripts\activate  (활성화)
+  
 4. django 설치
  - uv pip install django
 
@@ -45,6 +46,15 @@
 	- LANGUAGE_CODE = 'ko-kr'  //언어코드-국가
 
 
+
+
+
+# account app 구현
+- 사용자 관리 앱
+
+- app을 생성
+  - python manage.py runserver
+  - config.settings INSTALLED_APP에 추가.
 
 
 

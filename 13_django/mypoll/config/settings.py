@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',  # polls app 등록
+    'account',  # account app 등록
 ]
 
 MIDDLEWARE = [

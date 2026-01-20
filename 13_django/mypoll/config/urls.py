@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("polls/", include("polls.urls")),  # polls/로 시작하는 url 경로로 요청이 들어오면 polls 앱 밑에 urls.py의 설정을 가서 나머지를 확인. 
     # path('polls/welcome', welcome, name="poll_welcome"),  # 1. client 요청 경로, 2. 호출할 view 함수 지정, 3. name="설정 이름" 
+    path("account/", include("account.urls")),
 ]
 # 요청경로: 'polls/welcome/ -> "http://IP:port/    polls/welcome"
 
