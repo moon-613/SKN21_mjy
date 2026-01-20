@@ -8,15 +8,17 @@
 <form method="post">
     {% csrf_token %}
 
+    <h3>질문</h3>
     {{q_form}}
+
     <h3 class="mt-2">보기</h3>
 
     {{c_formset.management_form}}
     {% comment %}
         <input type="hidden" name="form_TOTAL_FORMS" value="2" id="id_FORM-TOTAL_FORMS">
-        <input type="hidden" name="form_TOTAL_FORMS" value="2" id="id_FORM-TOTAL_FORMS">
-        <input type="hidden" name="form_TOTAL_FORMS" value="2" id="id_FORM-TOTAL_FORMS">
-        <input type="hidden" name="form_TOTAL_FORMS" value="2" id="id_FORM-TOTAL_FORMS">
+        <input type="hidden" name="form_INITIAL_FORMS" value="0" id="id_form_INITIAL_FORMS">
+        <input type="hidden" name="form_MIN_MUM_FORMS" value="0" id="id_form_MIN_MUM_FORMS">
+        <input type="hidden" name="form_MAX_NUM_FORMS" value="1000" id="id_form_MAX_NUM_FORMS">
         formset 객체의 정보
         이 정보들을 view에 전달해야 정상적으로 처리가 가능.
         TOTAL_FORMS: formset으로 생성한 input의 개수. view에서는 이 개수만큼만 읽어서 처리
@@ -29,8 +31,8 @@
     </div>
 
     <div id="btn_layer">
-            <button type="button" onclick="addChoice();">보기 추가</button>
-            <button type="button" onclick="delChoice();">보기 삭제</button>
+            <button type="button" onclick="addChoice()" class="btn btn-info">보기 추가</button>
+            <button type="button" onclick="delChoice()" class="btn btn-info">보기 삭제</button>
             <button type="submit" class="btn btn-success">문제 등록</button>
     </div>
 </form>
@@ -38,11 +40,13 @@
 {% block javascript %}
 <script>
     function addChoice() {
+
+        // 보기 input의 개수
         // "input[name$='choice_text']"input 태그. name 속성의 값이 choice_text로 끝나는 것.
         //"input[name$= $:끝나는 것. ^:시작하는 것.
         const choice_text_cnt = document.querySelectorAll("input[name$='choice_text']").length;
-        const choice_input_name = `form-${choice_text_cnt-choice_text`;
-        
+        const choice_input_name = `form-${choice_text_cnt}-choice_text`;
+
         const choice_input = document.createElement("input");
         choice_input.setAttribute("type", "text");
         choice_input.setAttribute("name", choice_input_name);
@@ -52,22 +56,21 @@
         const layer = document.getElementById("choice_layer");
         layer.appendChild(choice_input);
 
-        // formset으로 생성한 TOTAL_FORMS (폼 개수)값을 1 증가.
+        // formset으로 생성한 TOTAL_FORMS(폼개수) 값을 1 증가.
         const totalForms = document.getElementById("id_form-TOTAL_FORMS");
-        totalForms.value = parseInt(totalForms.value) + 1; 
+        totalForms.value = parseInt(totalForms.value) + 1;
     }
-        function delChoice() {
-        const layer = document.querySelector('#choice_layer');
-        if (layer.children.length > 2){
-        // 삭제
-        layer.removeChild(layer.lastChild);
-        } else {
-         //유지
-        alert("보기가 두 개면 삭제가 안됩니다.");
-        // TOTAL_FORMS의 value를 -1
-        
-        
-        }}
-
+    function delChoice() {
+        const layer = document.querySelector("#choice_layer");
+        if (layer.children.length > 2) {
+            // 삭제
+            layer.removeChild(layer.lastChild);
+            // TOTAL_FORMS의 value를 -1 
+            const totalForms = document.getElementById("id_form-TOTAL_FORMS");
+            totalForms.value = parseInt(totalForms.value) - 1;
+        }else{
+            //유지
+            alert("보기가 두개이면 삭제가 안됩니다.");;            }
+    }
 </script>
-{% endblock javascript %}
+{%endblock javascript%}

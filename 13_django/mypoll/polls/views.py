@@ -251,4 +251,31 @@ def vote_create(request):
         # print("---------------", c_formset)
 
         # 검증을 통과했는지 여부 - form.is_valid(): bool (True - 통과, False - 검증실패)
-        
+        if q_form.is_valid() and c_formset.is_valid():  # 요청파라미터 검증에 문제 없으면
+            # 요청파라미터 읽어서 조회. form객체. cleaned_data: dict
+            question_text = q_form.cleaned_data['question_text'] # key: Field 이름
+            choice_list = []
+            for c_form in c_formset:
+                choice_list.append(c_form.cleaned_data["choice_text"])
+
+            # DB 저장
+            try:
+                with transaction.atomic():
+                    q = Question(question_text=question_text)
+                    q.save()
+
+                    for choice_text in choice_list:
+                        c = Choice(choice_text=choice_text, question=q)
+                        c.save()
+
+            except:
+                return render(request, "error.html", {"error_message":"질문/보기 DB 저장 도중 문제 발생"})
+
+            return redirect(reverse("polls:list"))
+
+        else:  # 요청파라미터 검증 실패 => Form객체는 ValidationError객체를 가지고 있다. 
+               # 에러 처리 페이지로 이동 --> 등록페이지로 이동
+            return render(
+                request, "polls/vote_create_form.html",
+                {"q_form":q_form, "c_formset":c_formset} # validation(검증) 실패한 form들을 context_value로 전달.
+            )

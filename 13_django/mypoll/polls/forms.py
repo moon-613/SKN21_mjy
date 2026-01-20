@@ -20,6 +20,19 @@ class QuestionForm(forms.Form):
             attrs={"class":"form-control"}   # 입력 tag의 attribute 설정. 
         )
     )
+        # 검증 메소드를 추가. -> 업무 규칙에 의한 검증
+        # method 이름 규칙: 1. 개별 field들을 검증하는 경우 - clean_field name
+        #                 2. 전체 입력 데이터들을 검증 - clean
+        # 검증 method는 기본 검증을 하고 나서 호출한다. 
+        # - 구현: 검증 통과 - return 요청파라미터값. 검증 오류 발생: raise ValidationError
+    def clean_question_text(self):
+        txt = self.cleaned_data['question_text'].strip()  # 기본 검증을 통과한 입력값. 
+        # 질문은 5글자 넘어야 한다. 
+        if len(txt) <= 5:
+            raise forms.ValidationError("질문은 6글자 이상 입력하세요.")
+        return txt
+    
+
 class ChoiceForm(forms.Form):
     choice_text = forms.CharField(
         label="",  # 라벨을 생성하지 않게 한다.
@@ -27,6 +40,12 @@ class ChoiceForm(forms.Form):
         required=True,
         widget=forms.TextInput(attrs={"class":"form-control"})
     )
+    def clean_choice_text(self):
+        txt = self.cleaned_data['choice_text'].strip()  # 기본 검증을 통과한 입력값.
+        # 질문은 6글자 이상 가능
+        if len(txt) <= 5:
+                raise forms.ValidationError("질문은 6글자 이상 입력하세요.")
+        return txt
 
 # ChoiceForm을 이용해서 FormSet 클래스를 생성
 # FormSet: Form + Set : Form들의 집합
