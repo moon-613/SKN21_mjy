@@ -9,16 +9,17 @@ class CustomUser(AbstractUser):
     name = models.CharField(
         max_length=100,
         verbose_name="이름",   # Form 관련 설정. ModelForm을 만들 경우 form field 설정을 model field에 한다.
-
     )
     email = models.EmailField(   # DB-varchar type, python-Email 유효성 검사를 한다. 
         max_length=100,
         verbose_name="Email"
     )
     birthday = models.DateField(  # DB: date type, python: datetime.date
-        verbose="생일",
+        verbose_name="생일",
         null=True, # Nullable 컬럼
         blank=True,  # form관련 설정. 빈 문자열 (값)을 받을 수 있다. 
     )
 
-    def 
+    def __str__(self):
+        return f"username: {self.username}, name: {self.name}"
+    # 이렇게 한번에 관리하겠다 추가해준 것

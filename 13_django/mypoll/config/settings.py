@@ -113,6 +113,11 @@ USE_I18N = True
 USE_TZ = True
 
 
+######################################
+# 사용자 관리 시 사용하는 UserModel 변경
+######################################
+AUTH_USER_MODEL = "account.CustomUser"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
