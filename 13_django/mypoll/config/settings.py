@@ -23,14 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-nv@hxewzw@fj%7n8&p0h0v=5c249xt-p*2dhxq7qh#$0(#up2d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # 디버그 모드 설정. 다양한 변수들의 상태 확인 가능. 배포할 때는 False.
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [ # 3rd party application 사용 가능. pip로 설치한 앱 또는 본인이 만든 app 추가. 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',  # polls app 등록
-    # 'account',  # account app 등록
+    'account',  # account app 등록
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [  # request와 response 사이의 주요 기능 레이어. 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,7 +53,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-TEMPLATES = [
+TEMPLATES = [  # django template 관련 설정, 실제 뷰 (html, 변수)
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / "templates"],
@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
+DATABASES = { # DB 엔진의 연결 설정
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # 연결할 DB 엔진 (Lib)
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -116,9 +116,10 @@ USE_TZ = True
 ######################################
 # 사용자 관리 시 사용하는 UserModel 변경
 ######################################
-# AUTH_USER_MODEL = "account.CustomUser"
+AUTH_USER_MODEL = "account.CustomUser"  
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+
+STATIC_URL = 'static/'  # 정적 파일의 URL (css, javascript, image, etc)

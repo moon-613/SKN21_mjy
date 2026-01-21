@@ -4,11 +4,11 @@ from django.contrib.auth.models import AbstractUser
 
 # AbstractUser -> username, password
 # Customer: 추가할 field들 정의 (name, email, birthday, [profile_image])
-class CustomUser(AbstractUser):
+class CustomUser(AbstractUser):  # 기존 사용자 모델을 상속받아 새로운 필드들을 추가
 
     name = models.CharField(
         max_length=100,
-        verbose_name="이름",   # Form 관련 설정. ModelForm을 만들 경우 form field 설정을 model field에 한다.
+        verbose_name="이름",      # Form 관련 설정. ModelForm을 만들 경우 form field 설정을 model field에 한다.
     )
     email = models.EmailField(   # DB-varchar type, python-Email 유효성 검사를 한다. 
         max_length=100,

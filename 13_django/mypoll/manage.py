@@ -1,3 +1,4 @@
+# 프로젝트 관리하기 위한 다양한 명령어 제공되는 파일
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os

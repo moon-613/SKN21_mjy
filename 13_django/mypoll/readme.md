@@ -60,10 +60,10 @@
     - config/urls.py에 account urls.py(url-conf)를 등록
 
 - Model
-  - AbstractUser 상속
+  - AbstractUser 상속 (기존에 있던 기본 사용자 모델을 상속 받아 새로운 필드들을 추가하는 방법)
   - admin.py에 등록 (admin app에서 관리할 수 있는 데이터)
   - 사용자 관리할 때 사용할 User 모델을 기본 모델에서 우리가 만든 것으로 변경
-    - config/settings : AUTH_USER_MODEL = 'account.CustomUser'
+    - config.settings : AUTH_USER_MODEL = 'account.CustomUser'
 
 
 account app \ migrations 디렉토리 삭제 
@@ -72,6 +72,7 @@ root \ db.sqlite3 삭제
   - python manage.py makemigrations account
   - python manage.py migrate
   - python manage.py createsuperuser
+
   - python manage.py runserver
 
 

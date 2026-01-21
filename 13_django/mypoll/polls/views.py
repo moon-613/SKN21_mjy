@@ -76,7 +76,6 @@ def list(request):
     current_page = int(request.GET.get("page", 1))  # 현재 조회 요청이 들어온 페이지 번호. get 방식의 요청파라미터.
     # 혹시 page값 넘어온 게 없으면 default = 1을 줘 라는 뜻으로 1.
 
-
     # Paginator
     q_list = Question.objects.all().order_by("-pk") 
     pn = Paginator(q_list, paginate_by)
