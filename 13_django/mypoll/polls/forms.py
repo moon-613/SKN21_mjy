@@ -42,9 +42,9 @@ class ChoiceForm(forms.Form):
     )
     def clean_choice_text(self):
         txt = self.cleaned_data['choice_text'].strip()  # 기본 검증을 통과한 입력값.
-        # 질문은 6글자 이상 가능
-        if len(txt) <= 5:
-                raise forms.ValidationError("질문은 6글자 이상 입력하세요.")
+        # 질문은 1글자 이상 가능
+        if len(txt) < 2:
+                raise forms.ValidationError("질문은 2글자 이상 입력하세요.")
         return txt
 
 # ChoiceForm을 이용해서 FormSet 클래스를 생성

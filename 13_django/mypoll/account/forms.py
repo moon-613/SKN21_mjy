@@ -37,7 +37,18 @@ class CustomUserCreationForm(UserCreationForm):
             
 # 사용자 정보 수정 폼
 class CustomUserChangeForm(UserChangeForm):
+    # 패스워드 변경 메뉴는 나오지 않게 설정
+    password = None
 
     class Meta:
         model = CustomUser
         fields = ["name", "email", "birthday"]
+        widgets = {
+            "birthday":forms.DateInput(attrs={"type":"date"})
+        }
+
+    def clean_name(self):
+        name = self.cleaned_data['name'] # 기본 검증 통과한 
+        if len(name) < 2: # 이름은 두 글자 이상이면 통과
+            raise forms.ValidationError("이름은 두 글자 이상 입력하세요.")
+        return name

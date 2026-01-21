@@ -4,12 +4,17 @@ from django.contrib.auth import (
     authenticate, # 인증 확인: username, password를 DB에서 확인
     login,  # login 처리 - 로그인한 사용자 정보(User Model)를 session에 추가.
     logout, # 로그아웃 처리 - session에서 사용자 정보를 제거.
-    update_session_auth_hash # 회원정보 수정 처리에서 사용. session의 사용자 정보를 수정한 것을 변경. 
+    update_session_auth_hash, # 회원정보 수정 처리에서 사용. session의 사용자 정보를 수정한 것을 변경. 
+    get_user
 )
+
 from django.contrib.auth.forms import (
     AuthenticationForm, # login form
     PasswordChangeForm, # password 변경 화면의 폼
 )
+from django.contrib.auth.decorators import login_required
+
+
 from .models import CustomUser 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
  
@@ -54,18 +59,22 @@ def create(request):
             )
         
 # 가입한 사용자 정보 조회
-# URL: /account/detail/<user_id> (TODO: user_id는 나중에 로그인 처리 후 변경)
+# URL: /account/detail
 # 함수: detail
 # 응답: account/detail.html
-
-def detail(request, user_id):
+@login_required
+def detail(request):
     try:
-        user = CustomUser.objects.get(username=user_id)
+        # 로그인한 사용자의 user로부터 id를 조회
+        # get_user(request)/request.user: 로그인한 User 모델 객체
+        user_id = get_user(request).pk
+        user = CustomUser.objects.get(pk=user_id)
         return render(
             request, "account/detail.html", {"user":user}
         )
 
-    except:
+    except Exception as e:
+        print(e)
         return render(request, "error.html", {"error_message":"회원정보 조회 도중 문제 발생"})
     
 # 로그인 처리 구현
@@ -82,4 +91,84 @@ def user_login(request):
         )
 
     elif request.method == "POST":
-        pass
+        # 로그인 처리
+        ## 요청파라미터 (username, password) 조회
+        username = request.POST['username']
+        password = request.POST['password']
+
+        ## DB로부터 조회 (username과 password가 일치하는지)
+        ### 반환값: User Model (일치), None (불일치)
+        user = authenticate(request, username=username, password=password)
+        if user is not None: 
+            ## 일치 - 로그인 처리 (session에 로그인 사용자 정보 - UserModel-을 저장)
+            login(request, user) # session에 user를 등록
+
+            # 
+            if request.GET.get("next"):  # next query string이 있다면 
+                # 로그인 한 상태에서 호출해야 하는 url을 안하고 호출한 경우 원래 요청한 url
+                return redirect(request.GET.get("next"))
+
+            return redirect(reverse("polls:welcome"))
+        else:
+            ## 불일치 - 로그인 화면으로 이동 
+            return render(request, "account/login.html", 
+                {"form":AuthenticationForm(), 
+                 "error_msg":"username, password를 다시 확인하세요."}
+            )
+        
+# 로그아웃 처리
+## /account/logout
+## view함수: user_logout
+## 응답: redirect방식 -polls:welcome
+@login_required
+def user_logout(request):
+    # 로그인 시 호출했던 login() 함수가 처리한 것을 무효화 처리 (session에서 user 정보를 제거)
+    logout(request)
+    return redirect(reverse("polls:welcome"))
+
+
+
+
+# login한 회원 정보 수정 
+# url: /account/update
+# view함수: update
+#         - GET: 수정폼 페이지를 반환 (account/update.html)
+#         - POST: 수정 처리 (redirect: account:detail view)
+@login_required
+def update(request):
+    if request.method == "GET":
+        # CustomUserChangeForm을 이용
+        ## 수정 폼: 객체 생성시 수정할 model 객체를 전달.
+        form = CustomUserChangeForm(instance=get_user(request))
+        return render(request, "account/update.html", {"form":form})
+
+    elif request.method == "POST":
+        # 수정 처리
+        # 1. 요청 파라미터 조회 + 검증
+        form = CustomUserChangeForm(request.POST, instance=get_user(request))
+
+        if form.is_valid():
+            # DB 저장
+            user = form.save()
+            # session에 저장된 User 정보를 수정된 것으로 변경
+            update_session_auth_hash(request, user)
+            # 상세페이지 요청
+            return redirect(reverse("account:detail"))
+        else:
+            return render(request, "account/update.html", {"form":form})
+
+# Password 변경 처리
+# 요청 URL: /account/password_change
+# view함수: password_change
+# 처리 - GET: 패스워드 변경 폼 페이지로 이동 (account/password_change.html)
+#     - POST: 패스워드 변경 처리 (redirect - account:detail)
+@login_required
+def password_change(request):
+
+    if request.method == "GET":
+        form = PasswordChangeForm(get_user(request))  # User Model을 넣어서 생성
+        return render(request, "account/password_change.html", {"form":form})
+
+    elif request.method == "POST":
+        # 요청 파라미터 조회 + 검증
+        form = PasswordChangeForm(get_user(request), request.POST)

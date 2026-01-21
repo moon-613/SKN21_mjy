@@ -1,10 +1,15 @@
+
+
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse    # url conf의 설정 이름으로 url을 조회하는 함수 
+
 ## path("url", view함수, name="name")
 # reverse("name") => url 
 from django.db import transaction   # DB Transaction 처리 
 from django.core.paginator import Paginator
+
 from datetime import datetime
 from .models import Question, Choice
 
@@ -273,7 +278,9 @@ def vote_create_old(request):
 
 from .forms import QuestionForm, ChoiceFormSet
 
+
 # forms.py의 Form을 이용한 요청 파라미터 처리 view 함수
+@login_required  # @ : decorator는 사용환경한테 보여주는 것. 이 함수 실행 전에 로그인이 필요하다는 뜻. 
 def vote_create(request):
  
     if request.method == "GET":
