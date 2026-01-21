@@ -172,3 +172,11 @@ def password_change(request):
     elif request.method == "POST":
         # 요청 파라미터 조회 + 검증
         form = PasswordChangeForm(get_user(request), request.POST)
+        if form.is_valid():
+            # DB 저장
+            user = form.save()
+            update_session_auth_hash(request, user)
+            # 응답
+            return redirect(reverse("account:detail"))
+        else: 
+            return render(request, "account/password_change.html", {"form":form})

@@ -42,7 +42,7 @@ INSTALLED_APPS = [ # 3rd party application 사용 가능. pip로 설치한 앱 �
     'django_bootstrap5', # django app 등록
 ]
 
-MIDDLEWARE = [  # request와 response 사이의 주요 기능 레이어. 
+MIDDLEWARE = [  # request와 response 사이의 주요 기능 레이어. 인증이나 보안과 관련된 내용들.
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
