@@ -12,12 +12,21 @@ from .models import CustomUser
 ## add_fieldsets: tuple - 등록 화면에 나올 항목들 지정
 ## fieldsets: tuple - 수정 화면에 나올 항목들 지정
 
+# field: 개별 항목
+# fieldset: field들을 그룹으로 묶은 것. (category)
 
+class CustomUserAdmin(UserAdmin):
+    # 목록에 나올 User의 field들
+    list_display = ["username", "name", "email"]
+    add_fieldsets = (
+        ("인증정보", {"fields":("username", "password1", "password2")}), # 개별 fieldset
+        ("개인정보", {"fields":("name", "email", "birthday")}),
+        ("권한", {"fields":("is_staff", "is_superuser")})
+    )
+    fieldsets = (
+        ("인증정보", {"fields":("username", "password")}), # 개별 fieldset
+        ("개인정보", {"fields":("name", "email", "birthday")}),
+        ("권한", {"fields":("is_staff", "is_superuser")})
+    )
 
-
-
-
-
-
-
-admin.site.register(CustomUser)
+admin.site.register(CustomUser, CustomUserAdmin)

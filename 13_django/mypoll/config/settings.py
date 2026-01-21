@@ -39,6 +39,7 @@ INSTALLED_APPS = [ # 3rd party application 사용 가능. pip로 설치한 앱 �
     'django.contrib.staticfiles',
     'polls',  # polls app 등록
     'account',  # account app 등록
+    'django_bootstrap5', # django app 등록
 ]
 
 MIDDLEWARE = [  # request와 response 사이의 주요 기능 레이어. 

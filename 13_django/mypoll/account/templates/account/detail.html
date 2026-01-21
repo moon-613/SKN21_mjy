@@ -1,0 +1,25 @@
+{% extends "layout/main_layout.html %}
+
+{% block title %}회원 정보 조회{% endblock title %}
+
+{% block contents %}
+<h1>회원 정보</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <td>{{user.username}}</td>
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td>{{user.name}}</td>
+    </tr>
+    <tr>
+        <th>이메일 주소</th>
+        <td>{{user.email}}</td>
+    </tr>
+    <tr>
+        <th>생일</th>
+        <td>{{user.birthday}}</td>
+    </tr>
+</table>
+{% endblock contents %}

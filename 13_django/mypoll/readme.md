@@ -75,6 +75,25 @@ root \ db.sqlite3 삭제
 
   - python manage.py runserver
 
+http://127.0.0.1:8000/admin
+
+- Form
+  - account/forms.py 파일 생성.
+  - Model Form을 정의.
+  
+- 템플릿 폴더 생성
+  - account/templates/account
+
+- django-bootstrap5
+  - 폼을 이용해서 등록/수정 페이지를 만들 때 bootstrap 디자인을 적용해주는 lib
+  - uv pip install django-bootstrap5
+  - config/settings.py INSTALLED_APP으로 등록
+  - template
+  ```
+  {% load django_bootstrap5 %} -> 태그들을 사용할 수 있도록 로드 
+
+  {% bootstrap_form 폼변수 %} -> {{폼변수}} 대신
+  ```
 
 
 
