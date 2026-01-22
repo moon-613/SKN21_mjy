@@ -155,3 +155,11 @@ STATIC_ROOT = BASE_DIR / "static_files"
 ## 웹 서버: 정적파일을 서비스 (html, css, js, img, client에게 응답)
 # collectstatic 명령어로 static 파일들을 한 디렉토리로 모아놓고 web 서버에
 # 그 디렉토리를 설정해서 서비스 할 수 있게 한다.
+
+####################################
+# 파일 업로드 설정
+####################################
+MEDIA_URL = "/media/"   # 업로드 된 파일 다운로드 요청 URL 경로
+MEDIA_ROOT = BASE_DIR / "media"   # 업로드 된 파일을 저장할 디렉토리
+
+# ip:port/media/xxxx -> xxxx파일을 MEDIA_ROOT 디렉토리 아래에서 찾는다.

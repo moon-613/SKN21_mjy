@@ -18,7 +18,7 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser # 지정한 Model의 Field들을 이용해 Form을 구성.
         
         # 지정한 field들을 이용해서 form 구성 
-        fields = ["username", "password1", "password2", "name", "email", "birthday"]
+        fields = ["username", "password1", "password2", "name", "email", "birthday", "profile_img"]
         # fields = "__all__"  # 모델의 모든 field들을 다 이용해서 Form을 구성
         # exclude = ["필드명"]  # 지정한 field를 제외한 나머지를 이용해서 Form 구성. field와 exclude는 같이 설정할 수 없다.
 
