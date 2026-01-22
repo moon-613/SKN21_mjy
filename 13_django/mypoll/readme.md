@@ -96,4 +96,18 @@ http://127.0.0.1:8000/admin
   ```
 
 
+# 파일 업로드
+- settings.py
+  - MEDIA_URL
+  - MEDIA_ROOT
+- Model
+  - ImageField 추가
+- Form
+  - profile_img 를 fieldsets에 추가
+- create/update.html
+    <form method="post" enctype="multipart/form-data">
+- view: create/update에서 Form 생성시 request.FILES를 initializer에 넣어서 생성한다.
+- detail.html에서 업로드 된 파일이 나오도록 처리
+- config/urls.py url 설정.
+
 
