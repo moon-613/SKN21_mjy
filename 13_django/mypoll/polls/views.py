@@ -144,7 +144,7 @@ def vote_form(request, question_id):
         # print(f"{question_id}의 질문이 없습니다.")
         return render(
             request,
-            "polls/error.html",
+            "error.html",
             {"error_message":f"요청하신 {question_id}번 질문이 없습니다."}
         )
 

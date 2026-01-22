@@ -130,5 +130,28 @@ LOGIN_URL = '/account/login'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+######################################
+# static 파일들을 요청할 때 시작할 URL 경로
+# 
+# app/static -> 아래에 있는 경로의 static 파일 요청 URL
+## http://ip:port/STATIC_URL/
 
-STATIC_URL = 'static/'  # 정적 파일의 URL (css, javascript, image, etc)
+# polls/static/polls/imgs/survey.webp
+#     -> http://127.0.0.1:8000/static
+STATIC_URL = '/static/'  # 정적 파일의 URL (css, javascript, image, etc)
+
+# app/static 디렉토리 이외의 경로에 static 파일들을 넣을 경우 디렉토리를 등록해야한다.
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+STATIC_ROOT = BASE_DIR / "static_files"
+# python manage.py collectstatic 을 실행
+# 모든 static 경로 (app/static, STATICFILE_DIRS)의 static 파일들을
+#    STATIC_ROOT 디렉토리 아래로 복사한다.
+#    - 모든 static 파일들을 한 곳으로 모아준다.
+
+# 운영환경 (django1.pdf p.16 참고)
+# 웹 서버 (HTTP 서버) +WSGI/ASGI (장고 실행환경)
+## WSGI: backend 동적 코드를 실행 (MVT 컴포넌트를 실행)
+## 웹 서버: 정적파일을 서비스 (html, css, js, img, client에게 응답)
+# collectstatic 명령어로 static 파일들을 한 디렉토리로 모아놓고 web 서버에
+# 그 디렉토리를 설정해서 서비스 할 수 있게 한다.
