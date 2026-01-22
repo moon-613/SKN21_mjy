@@ -37,9 +37,11 @@ def create(request):
     
     elif request.method == "POST":
         # 가입 처리
-        ## 1. 요청 파라미터 조회 및 검증
-        form = CustomUserCreationForm(request.POST)
-
+        ## 1. 요청 파라미터 조회 및 검증 -> Form
+        # request.POST: 일반 요청 파라미터 (text) 저장
+        # request.FILES: 업로드 된 파일 (요청파라미터)
+        form = CustomUserCreationForm(request.POST, request.FILES)
+        # 업로드 된 파일을 설정된 저장경로에 저장하고 그 경로를 Field에 가지고 있는다.
         if form.is_valid(): # 요청 파라미터에 문제가 없는 경우
             ## 2. DB에 저장
             # ModelForm은 save()를 제공. 요청 파라미터 값들을 DB에 insert/update 해준다. 
@@ -145,7 +147,7 @@ def update(request):
     elif request.method == "POST":
         # 수정 처리
         # 1. 요청 파라미터 조회 + 검증
-        form = CustomUserChangeForm(request.POST, instance=get_user(request))
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=get_user(request))
 
         if form.is_valid():
             # DB 저장

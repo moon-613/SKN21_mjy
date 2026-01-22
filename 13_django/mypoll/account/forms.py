@@ -42,7 +42,7 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ["name", "email", "birthday"]
+        fields = ["name", "email", "birthday", "profile_img"]
         widgets = {
             "birthday":forms.DateInput(attrs={"type":"date"})
         }
