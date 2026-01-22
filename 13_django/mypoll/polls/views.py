@@ -162,9 +162,25 @@ def vote_form(request, question_id):
 #             POST - request.POST -> dictionary 
 
 def vote(request): 
-    # 요청 파라미터 조회
+    #요청 파라미터 조회
     choice_id = request.POST.get('choice')  # 선택된 보기의 ID
     question_id = request.POST.get('question_id')  # 질문 ID (이따 결과에서 사용할 것)
+    ##################################################################################
+    # 쿠키를 이용해서 현재 사용자가 이미 투표한 적이 있는 질문이면 투표를 못하게 한다.
+    #     - 쿠키 예제 연습 (실제는 DB를 이용해서 처리해야 한다. 사용자-투표 질문 번호 테이블 이용)
+    # 1. 쿠키에 voted_question에 요청한 question_id가 있는지 여부 확인
+    #   - 있으면 error_message와 함께 투표 못한다고 vote_form으로 이동
+    #   - 없으면 투표 처리 -> cookie voted_question에 투표 질문 ID를 추가.
+    ##################################################################################
+    voted_question_ids = request.COOKIES.get('voted_question') # "1, 7, 10". 형태가 문자열로 나온다.
+    if voted_question_ids:
+        q_id_list = voted_question_ids.split(",") # ["1","7","10"]
+        if question_id in q_id_list: # 이미 투표한 질문
+            question = Question.objects.get(pk=question_id)
+            return render(request, "polls/vote_form.html",
+                          {"question":question, "error_message":"이미 투표한 질문입니다."})
+
+    
 
     # choice_id가 넘어왔다면 choice의 votes를 1 증가
     if choice_id != None:
@@ -172,13 +188,22 @@ def vote(request):
         selected_choice.votes += 1
         selected_choice.save()   # update
 
+
+        ############################################
+        # voted_question Cookie에 투표한 질문_ID 추가
+
+        voted_question_ids = str(question_id) if not voted_question_ids else f"{voted_question_ids},{question_id}"
+
+
         # TODO 업데이트 결과를 보여주는 View(vote_result)를 redirect 방식으로 요청 
         # urls.py에 path에 등록된 이름으로 url을 조회
         ## app_name: 설정 이름
         ## path parameter 있는 경우 args=[path parameter 값, ..]
         url = reverse("polls:vote_result", args=[question_id])
         print(type(url), url)
-        return redirect(url)
+        response = redirect(url)
+        response.set_cookie("voted_question", voted_question_ids)
+        return response
 
         # # 결과 페이지 - question 조회
         # question = Question.objects.get(pk=question_id)
@@ -340,9 +365,10 @@ def vote_create(request):
 # 요청 URL: /polls/vote_delete/삭제할 질문_PK
 # view 함수: vote_delete
 # 응답     : redirect - polls:list
+@login_required
 def vote_delete(requst, question_id):
     # 삭제할 데이터 조회
     question = Question.objects.get(pk=question_id)
     # 삭제
-    question.delete()
-    
+    question.delete() # choice도 같이 삭제 (CASCADE 설정을 같이 했기 때문에)
+    return redirect("polls:list")

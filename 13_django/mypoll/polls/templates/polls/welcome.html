@@ -1,20 +1,20 @@
-<!-- polls/templates/polls/welcome.html-->
-<!-- HTML이 아니라 django template -->
+<!-- 'layout/main_layout.html' 레이아웃을 여기로 불러와라 라는 뜻 -->
+{% extends 'layout/main_layout.html' %}
 
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>설문</title>
-    </head>
-    <body>
-        <h1>Welcome-template</h1>
-        <p>저희 설문 페이지를 방문해주셔서 감사합니다.</p>
-        현재 시간: {{now}}  <!-- context value now를 출력 -->
-        <p>
-            <!-- <a href="/polls/list">질문 목록</a>  /polls/list : 절대 경로  |  polls/list : 상대 경로 -->
-            <!-- <a href="/polls/vote_create">질문 등록</a>   -->
-            <a href="{% url 'polls:list' %}">질문 목록</a>  <!-- /polls/list : 절대 경로  |  polls/list : 상대 경로 -->
-            <a href="{% url 'polls:vote_create' %}">질문 등록</a>  
-        </p>
-    </body>
-</html>
+<!-- main_layout.html의 block에 넣을 내용들만 정의 -->
+{% block title %}설문 목록{% endblock title %}
+{% block contents %}
+<h1>Welcome-template</h1>
+
+<img src="/static/polls/imgs" alt="">
+
+<p>저희 설문 페이지를 방문해주셔서 감사합니다.</p>
+현재 시간: {{now}}  <!-- context value now를 출력 -->
+<p>
+    <!-- <a href="/polls/list">질문 목록</a>  /polls/list : 절대 경로  |  polls/list : 상대 경로 -->
+    <!-- <a href="/polls/vote_create">질문 등록</a>   -->
+    <a href="{% url 'polls:list' %}">질문 목록</a>  <!-- /polls/list : 절대 경로  |  polls/list : 상대 경로 -->
+    <a href="{% url 'polls:vote_create' %}">질문 등록</a>  
+</p>
+{% endblock contents %}
+   
