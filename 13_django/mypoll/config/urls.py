@@ -19,11 +19,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 # from polls.views import welcome
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("polls/", include("polls.urls")),  # polls/로 시작하는 url 경로로 요청이 들어오면 polls 앱 밑에 urls.py의 설정을 가서 나머지를 확인. 
-    # path('polls/welcome', welcome, name="poll_welcome"),  # 1. client 요청 경로, 2. 호출할 view 함수 지정, 3. name="설정 이름" 
     path("account/", include("account.urls")),
+    # path('polls/welcome', welcome, name="poll_welcome"),  # 1. client 요청 경로, 2. 호출할 view 함수 지정, 3. name="설정 이름" 
 ]
 # 요청경로: 'polls/welcome/ -> "http://IP:port/    polls/welcome"
 
+from django.conf.urls.static import static
+from . import settings
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# MEDIA_URL 경로로 요청이 들어오면 어느 디렉토리를 찾아야 하는 지 설정
+## 개발 서버에서 설정 필요.
+## 운영 환경 (웹서버 + WSGI)에서는 업로드 파일도 static 파일로 간주해서 웹서버가 처리하도록 설정.

@@ -24,7 +24,8 @@
     </tr>
 </table>
 {% if user.profile_img %}
-    <a href="{{user.profile_img.url}}"></a>
+    <a href="{{user.profile_img.url}}">{{user.profile_img}}</a><br>
+    <img src="{{user.profile_img.url}}">
 {% else %}
     프로필 사진이 없습니다.
 {% endif %}
