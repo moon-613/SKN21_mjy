@@ -20,13 +20,13 @@
         <div class="navbar-nav">
             <a href="{% url 'polls:list' %}" class="nav-link">설문 목록</a>
 
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated %} <!-- 로그인 했을 때 나오는 메뉴들-->
                 <a href="{% url 'polls:vote_create' %}" class="nav-link">설문 등록</a>
                 <a href="{% url 'account:detail' %}" class="nav-link">{{user.username}}</a>
                 <a href="{% url 'account:logout' %}" class="nav-link">로그아웃</a>
             {% endif %}
             
-            {% if not user.is_authenticated %}
+            {% if not user.is_authenticated %} <!-- 로그인 하지 않았을 때 나오는 메뉴들-->
                 <a href="{% url 'account:create' %}" class="nav-link">회원가입</a>
                 <a href="{% url 'account:login' %}" class="nav-link">로그인</a>
             {% endif %}

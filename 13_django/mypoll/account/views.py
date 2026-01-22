@@ -96,12 +96,14 @@ def user_login(request):
 
         ## DB로부터 조회 (username과 password가 일치하는지)
         ### 반환값: User Model (일치), None (불일치)
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password) # authenticate 이것 쓰면 암호화된 것들 알아서 비교해줌.
         if user is not None: 
             ## 일치 - 로그인 처리 (session에 로그인 사용자 정보 - UserModel-을 저장)
             login(request, user) # session에 user를 등록
 
-            # 
+            # http://127.0.0.1:8000/account/login  -> 로그인
+
+            # http://127.0.0.1:8000/account/login?next=/polls/vote_create  -> 로그인 하고 넘어갈 페이지를 쿼리 스트링으로 붙여줌.
             if request.GET.get("next"):  # next query string이 있다면 
                 # 로그인 한 상태에서 호출해야 하는 url을 안하고 호출한 경우 원래 요청한 url
                 return redirect(request.GET.get("next"))
@@ -178,3 +180,11 @@ def password_change(request):
             return redirect(reverse("account:detail"))
         else: 
             return render(request, "account/password_change.html", {"form":form})
+        
+
+
+# 사용자 삭제 (탈퇴) 처리
+# 요청 파라미터: accout/delete
+# view 함수: user_delete
+# 응답: redirect 방식으로 polls/welcome
+
