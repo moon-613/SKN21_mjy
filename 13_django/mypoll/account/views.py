@@ -187,4 +187,11 @@ def password_change(request):
 # 요청 파라미터: accout/delete
 # view 함수: user_delete
 # 응답: redirect 방식으로 polls/welcome
-
+@login_required
+def user_delete(request):
+    # 로그인 한 사용자를 삭제
+    user = get_user(request) # 로그인 한 사용자의 Model 객체 
+    user.delete() # DB 삭제
+    # 로그아웃 처리
+    logout(request)
+    return redirect(reverse("polls:welcome"))

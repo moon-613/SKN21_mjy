@@ -334,3 +334,15 @@ def vote_create(request):
                 request, "polls/vote_create_form.html",
                 {"q_form":q_form, "c_formset":c_formset} # validation(검증) 실패한 form들을 context_value로 전달.
             )
+
+
+# 설문 질문 삭제 처리
+# 요청 URL: /polls/vote_delete/삭제할 질문_PK
+# view 함수: vote_delete
+# 응답     : redirect - polls:list
+def vote_delete(requst, question_id):
+    # 삭제할 데이터 조회
+    question = Question.objects.get(pk=question_id)
+    # 삭제
+    question.delete()
+    

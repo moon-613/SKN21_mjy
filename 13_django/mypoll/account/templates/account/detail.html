@@ -26,5 +26,7 @@
 <div class="mt-3">
     <a href="{% url 'account:update' %}" class="btn btn-success">정보 수정</a>
     <a href="{% url 'account:password_change' %}" class="btn btn-success">패스워드 변경</a>
+    <a href="{% url 'account:delete' %}" class="btn btn-danger" onclick="return confirm('정말 탈퇴하시겠습니까?')">탈퇴</a>
 </div>
+
 {% endblock contents %}

@@ -11,4 +11,5 @@ urlpatterns =[  # 이게 없으면 이 파일을 url 파일이라고 인식하�
     path("logout", views.user_logout, name="logout"),
     path("update", views.update, name="update"),
     path("password_change", views.password_change, name="password_change"),
+    path("delete", views.user_delete, name="delete"),
 ]
