@@ -7,13 +7,11 @@ from django.contrib.auth import (
     update_session_auth_hash, # 회원정보 수정 처리에서 사용. session의 사용자 정보를 수정한 것을 변경. 
     get_user
 )
-
 from django.contrib.auth.forms import (
     AuthenticationForm, # login form
     PasswordChangeForm, # password 변경 화면의 폼
 )
 from django.contrib.auth.decorators import login_required
-
 
 from .models import CustomUser 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
