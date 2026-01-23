@@ -29,10 +29,11 @@ def get_chain():
     )
     chat = ChatOpenAI(model_name="gpt-5-mini")
     return prompt | chat
-
+# 챗봇 화면 (html) 응답
 def index(request):
     return render(request, 'chat/index.html')
 
+# 사용자 질의를 받아서 LLM에게 요청 -> 응답을 streaming으로 답.
 def stream_chat(request):
     message = request.GET.get('message', '')
     if not message:
@@ -88,7 +89,7 @@ def stream_chat(request):
             traceback.print_exc()
             yield f"data: [ERROR] {str(e)}\n\n"
 
-    response = StreamingHttpResponse(event_stream(), content_type='text/event-stream') # iterable
+    response = StreamingHttpResponse(event_stream(), content_type='text/event-stream') # event_stream()에 generator를 보내줌. iterable
     response['Cache-Control'] = 'no-cache'
    
     return response
