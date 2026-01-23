@@ -39,13 +39,17 @@ def stream_chat(request):
     if not message:
         return StreamingHttpResponse("data: [ERROR] 메세지를 입력하세요.\n\n", content_type='text/event-stream')
 
+
+    # session에서 대화 히스토리(내역)을 저장. 없으면 만들어서 (빈 리스트)
+    # session에 저장. dictionary.
     if 'message_history' not in request.session:
         request.session['message_history'] = []
-        request.session.modified = True
-        request.session.save()
+        request.session.modified = True  # session 상태가 변경 됨을 표시 
+        request.session.save()   # 바뀐 상태를 저장/적용 (보장)
 
+    # LLM에 요청을 하고 streaming으로 응답을 받아서 제공하는 generator
     def event_stream():
-        try:
+        try: # 요청 
             message_history = request.session.get('message_history', [])
 
             chat = get_chain()
@@ -56,22 +60,24 @@ def stream_chat(request):
                 content = chunk.content.replace('\n', '<br>')
                 if content:
                     ai_message += content
-                    yield f"data: {content}\n\n"
+                    yield f"data: {content}\n\n"  # 
             
             message_history.append(HumanMessage(content=message))
             message_history.append(AIMessage(content=ai_message.replace('<br>', '\n')))
             
             trimmed_msg = trim_messages(
                 message_history,
-                max_tokens=20,
-                strategy="last",
-                token_counter=len,
-                start_on="human",
-                end_on=("human", "ai"),
-                include_system=True
+                max_tokens=20,      # 최대 20개 메세지만 유지
+                strategy="last",    # 최근 것을 남기는 전략
+                token_counter=len,  # max_tokens를 계산하는 방법 - len: 메세지 개수
+                start_on="human",   # 메세지 목록의 시작 ROLE 지정 
+                end_on=("human", "ai"), # 메세지 목록의 마지막 ROLE
+                include_system=True  # System 프롬프트를 유지할 지 여부
             )
             
             message_history_to_save = []
+            # Session에 저장하기 위해서 HumanMessage/AIMessage 타입의 객체를 
+            # dictionary (OpenAI chat 형식)으로 변환해서 저장. 
             for msg in trimmed_msg:
                 if isinstance(msg, HumanMessage):
                     message_history_to_save.append({"role": "user", "content": msg.content})
@@ -83,13 +89,15 @@ def stream_chat(request):
             request.session.save()
             
             print(f"저장된 히스토리: {len(message_history_to_save)}개 메시지")
-            yield "data: [DONE]\n\n"
+            yield "data: [DONE]\n\n"  # 끝났다고 보내줌. 
 
         except Exception as e:
             traceback.print_exc()
             yield f"data: [ERROR] {str(e)}\n\n"
-
+                                    # event_stream(): generator 실행한 것.
     response = StreamingHttpResponse(event_stream(), content_type='text/event-stream') # event_stream()에 generator를 보내줌. iterable
+    # generator에서 event_stream()을 받아서 client에게 token을 전송. 하는 게 내부에 정의되어 있을 것.
+    
     response['Cache-Control'] = 'no-cache'
    
     return response
