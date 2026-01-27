@@ -32,6 +32,7 @@ uv pip install gunicorn
 - DEBUG = False
 - SECRET_KEY = os.getenv() 이용
 
+- STATIC_URL = '/static/'
 - STATIC_ROOT = '/var/www/mypoll_chat/static'
 - MEDIA_ROOT = '/var/www/mypoll_chat/media'
 
@@ -62,9 +63,34 @@ uv pip install gunicorn
    - /etc/systemd/system 디렉토리 아래 service 설정 파일을 저장. 
    - /etc/systemd/system/mypoll_chat-wsgi.service 파일에 /mypoll_chat/aws_donfig/wsgi_conf.txt 내용을 저장.
 
+  - service로 등록
+      # sudo systemctl: system ctrl의 약자
+    - sudo systemctl  start mypoll_chat-wsgi # 서비스 실행
+    - sudo systemctl  enable  mypoll_chat-wsgi # 서비스로 등록
+    - sudo systemctl  status  mypoll_chat-wsgi # 서비스 상태 조회
+
+  - socket 파일 확인
+    - ls -l /run/mypoll_chat
+
+11. ngingx + gunicorn 연동 설정
+  - 사용자 요청에 따라서 어떻게 서비스 할지 설정. 
+  - /static/   ==> STATIC_ROOT 경로 파일을 서비스 
+  - /media/    ==> MEDIA_ROOT 경로 파일을 서비스 
+  - 나머지 url 요청   ==> gunicorn 호출
+  - ngingx 설정 파일에 위 내용을 설정 저장
+    - /etc/nginx/sites-available/mypoll_chat 파일에 "aws_config/nginx.txt"의 내용을 붙여넣기.
+- 심볼릭 링크 생성 + nginx 생성 시작
+  - sudo  ln  /etc/nginx.sites-available/mypoll_chat   /etc/nginx/sites-enabled
+    - ls -l /etc/nginx/sites-enabled
+  - sudo nginx -t   # NGINX 설정 파일 문법 검사 
+  - sudo systemctl restart nginx  # systemd 재시작
+  - sudo systemctl status nginx  # systemd 실행 상태를 확인 
 
 
-
-
-
-
+12. nginx 설정, gunicorn 설정 변경 _ web application 코드 변경
+  - sudo systemctl demon-reload
+  - sudo systemctl restart nginx   # nginx 설정 변경 
+  - sudo systemctl restart mypoll_chat-wsgi   # web app 코드 변경, gunicorn 서비스 설정 변경 
+  - 상태 확인
+    - sudo systemctl status nginx
+    - sudo systemctl status mypoll_chat-wsgi
