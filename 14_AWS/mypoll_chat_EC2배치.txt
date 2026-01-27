@@ -1,0 +1,70 @@
+1. 가상환경
+django_project(mypoll_chat) 아래
+
+uv venv .venv --python=3.12
+
+source .venv/bin/activate
+
+2. 패키지 설치
+uv pip install django django-bootstrap5 pillow langchain langchain-openai python-dotenv
+
+3. DB 설정
+ python manage.py makemigrations
+ python manage.py migrate
+
+4. 개발 서버로 실행
+ python  manage.py  runserver  0.0.0.0:8000
+
+ 43.203.97.41:8000
+
+
+5. nginx  (웹 서버) 설치
+
+sudo  apt  install  nginx
+- 서비스 데몬 등록 및 실행
+- 웹브라우저:  43.203.97.41
+
+6. gunicorn 설치
+uv pip install gunicorn
+
+7. settings.py (EC2)
+- ALLOWED_HOSTS = ["<<EC2 public ip?>>"]
+- DEBUG = False
+- SECRET_KEY = os.getenv() 이용
+
+- STATIC_ROOT = '/var/www/mypoll_chat/static'
+- MEDIA_ROOT = '/var/www/mypoll_chat/media'
+
+8. STATIC_ROOT/MEDIA_ROOT 디렉토리 생성 + 소유권 변경 + 권한설정
+
+- sudo mkdir  -p  /var/www/mypoll_chat/static
+- sudo mkdir  -p  /var/www/mypoll_chat/media
+
+- 디렉토리 소유권을 ubuntu로 변경
+  - sudo chown ubuntu:ubuntu /var/www/mypoll_chat/static
+  - sudo chown ubuntu:ubuntu /var/www/mypoll_chat/media
+  - ls -l   /var/www/mypoll_chat
+
+  - sudo chmod 755 /var/www/mypoll_chat/static
+  - sudo chmod 755 /var/www/mypoll_chat/media
+
+- collectstatic  실행 - APP들에 나눠져있는 static 파일들을 static_root 경로로 이동
+   - python  manage.py   collectstatic    
+   - 확인:  ls /var/www/mypoll_chat/static
+
+9. Gunicorn 실행
+ - mypoll_chat ROOT 디렉토리에서 실행
+   - gunicorn --bind 0.0.0.0:8000 config.wsgi:application
+   - http://43.203.97.41:8000
+
+10. Gunicorn을 시스템 서비스 데몬으로 등록 (booting 시 자동으로 실행되도록 설정)
+   - gunicorn + mypoll_chat application
+   - /etc/systemd/system 디렉토리 아래 service 설정 파일을 저장. 
+   - /etc/systemd/system/mypoll_chat-wsgi.service 파일에 /mypoll_chat/aws_donfig/wsgi_conf.txt 내용을 저장.
+
+
+
+
+
+
+
